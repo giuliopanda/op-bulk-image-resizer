@@ -5,6 +5,7 @@ var time_start = 0;
 var time_to_ajax = 0;
 var real_total = 0;
 var chart_img_dim = false;
+var chart_img_space_disk = false;
 var check_process_count = 0;
 var check_processing_timeout = 0;
 
@@ -104,13 +105,27 @@ jQuery(document).ready(function () {
         dataType: "json",
         data: { action: "op_calc_stats" }
     }).done(function (ris) {
-        console.log(ris);
+        jQuery('.js-op-spin-preload').remove();
+        jQuery('.js-op-spin-loaded').css('display','block');
         op_chart_config_dimension.data = ris.scatter;
 
         chart_img_dim = new Chart(
             document.getElementById('chart_dim'),
             op_chart_config_dimension
         );
+
+        op_config_space.data = ris.data_size_graph;
+        if (op_config_space.data.datasets[0]) {
+            op_config_space.data.datasets[0].backgroundColor = '#3696d7';
+            op_config_space.data.datasets[0].borderColor = '#3696d7';
+            op_config_space.data.datasets[0].fill = 'rgba(63, 155, 217, .5 )';
+            op_config_space.data.datasets[0].fill = { target: 'origin', above: 'rgba(63, 155, 217, .5 )'  };
+
+            chart_img_space_disk = new Chart(
+                document.getElementById('chart_space_disk'),
+                op_config_space
+            );
+        }
 
         jQuery('#statDiskSpaceImg').html(op_file_size(ris.images_size));
         jQuery('#staIimages').html(ris.tot_images);
@@ -180,6 +195,7 @@ function resize_all(start) {
                 data: { action: "op_end_resize_all" }
             })
             .done(function (ris) {
+                check_resize_processing();
                 jQuery('#OpBar').css('width', "0%");
                 jQuery('#OpBarInfo').html( "0%");
                 let time = (Date.now() - time_start) / 1000;
@@ -255,9 +271,19 @@ function check_resize_processing() {
         } else {
             check_processing_timeout = setTimeout(function () { check_resize_processing(); }, 120000);
             check_process_count = ris.done;
-            if (chart_img_dim) {
-                chart_img_dim.data = ris.scatter;
-                chart_img_dim.update();
+        }
+        if (chart_img_dim) {
+            chart_img_dim.data = ris.scatter;
+            chart_img_dim.update();
+        }
+        if (chart_img_space_disk) {
+            chart_img_space_disk.data = ris.data_size_graph;
+            if (chart_img_space_disk.data.datasets[0]) {
+                chart_img_space_disk.data.datasets[0].backgroundColor = '#3696d7';
+                chart_img_space_disk.data.datasets[0].borderColor = '#3696d7';
+                chart_img_space_disk.data.datasets[0].fill = 'rgba(63, 155, 217, .5 )';
+                chart_img_space_disk.data.datasets[0].fill = { target: 'origin', above: 'rgba(63, 155, 217, .5 )' };
+                chart_img_space_disk.update();
             }
         }
         
@@ -348,7 +374,34 @@ const op_chart_config_dimension = {
                     display: true, text: 'HEIGHT (PX)'
                 },
             },
-
         }
     }
+};
+
+
+const op_config_space = {
+    type: 'line',
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: false, 
+            }
+        },
+         scales: {
+            x: {
+                title: {
+                    display: true, text: 'TIME'
+                },
+            },
+            y: {
+                title: {
+                    display: true, text: 'MB'
+                },
+            },
+        }
+    },
 };

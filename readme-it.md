@@ -17,31 +17,77 @@ Bulk image resize permette di comprimere e fare il resize delle immagini caricat
  *Descrizione su come si usa il codice descritto.* 
 
  ## HOOKS
-*Esempi e usi degli hooks*
+#### fn_bir_resize_image_bulk($filename, $attachment_id);
+Personalizza il resize durante il bulk
+ritorna Boolean|Array. 
+Se torna true fa il resize dell'immagine se torna false non lo fa.
+Se invece torna un array con width,height (o 0,1) fa il resize alla dimensione scelta.
+
+#### fn_bir_resize_image_uploading ($filename, $post_id)
+Personalizza il resize quando si carica un'immagine. $post_id può essere 0 se si sta caricando un'immagine direttamente da media.
+ritorna Boolean|Array. 
+Se torna true fa il resize dell'immagine se torna false non lo fa.
+Se invece torna un array con width,height (o 0,1) fa il resize alla dimensione scelta.
+
+```php
+/**
+ * Ridimensiona solo le immagini caricate dagli articoli
+ */
+function fn_bir_resize_image_bulk ($filename, $attachment_id) {
+	$parent_id = wp_get_post_parent_id( $attachment_id);
+	if ($parent_id > 0) {
+		$post_type = get_post_type( $parent_id );
+		if ($post_type == "post") {
+			return true;
+		}
+	}
+	return false;
+}
+add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
+
+
+/**
+ * Ridimensiona solo le immagini caricate dagli articoli quando vengono caricati
+ */
+function fn_bir_resize_image_uploading ($filename, $post_id) {
+	$post_type = get_post_type( $post_id );
+	if ($post_type == "post") {
+		return true;
+	}
+	return false;
+}
+add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10, 2);
+
+```
 
  # CHANGELOG e BACKUP
- Il backup sta dentro la cartella github al momento sto facendo il backup dentro il mio drive personale ma è da passare su github
+ Caricato su github la versione 0.9.0
+ Inizio a lavorare la nuova versione (0.9.1)
+ Il flusso di pubblicazione su github è:
+- lo lavoro su un wordpress.
+- A fine lavorazione o inizio nuova lavorazione lo copio in locale di github.
+- Quando sto ad un punto fermo e lo voglio caricare online prima provo a installarlo su una nuova versione di wordpress temporanea per provare che funzioni.
+- Se tutto va bene faccio il commit su github.
 
 # TODO
-
 - Multilingua - **FATTO**
-- Pulizia codice (rivedere la struttura delle cartelle)
-- GitHub (31 maggio)
+- Pulizia codice (rivedere la struttura delle cartelle) **FATTO**
+- GitHub (31 maggio) **FATTO**
 - [nuova funzionalità] Aggiungere colonna su media **FATTO**
-- [nuova funzionalità] resize sul caricamento
-- Istallazione/disinstalla **in lavorazione** (quando disistalli rimuovi le option)
-- [nuova funzionalità] Hooks 
-- Guida **in lavorazione**
-- Revisione traduzione  (6 giugno)
-- Multisite test
 - Gestione degli errori durante la conversione. **FATTO**
+- [nuova funzionalità] resize sul caricamento **FATTO** ok
+- Istallazione/disinstalla **in lavorazione** (quando disistalli rimuovi le option)
+- [nuova funzionalità] Hooks  **FATTO Da testare**
+- Guida **in lavorazione**
+- Spiegazioni dettagliate in italiano/inglese (Entro il 6 giugno)
+- Verificare cosa bisogna fare per caricare il plugin su wordpress (Entro il 6 giugno)
+- Revisione traduzione  (inizio 6 giugno)
+- Multisite test
 - [nuova funzionalità] Grafico dello spazio occupato nel tempo.
 - Test sui tipi di dati che si possono convertire
+- Screenshot
 
 Caricamento su wordpress (13 giugno)
-
-
-
 
 
 # IDEE PER LE PROSSIME VERSIONI:

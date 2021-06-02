@@ -22,8 +22,9 @@ function op_view_container()
                     <?php op_block_setup(); ?>
                 </div>
                 <div class="op-block">
-                    <div class="op-form-title"><?php _e('HDD SPACE OCCUPIED', 'op-bir'); ?></div>
-                    <div class="op-info-box">
+                    <div class="op-form-title "><?php _e('HDD SPACE OCCUPIED', 'op-bir'); ?></div>
+                    <div class="spinner js-op-spin-preload" style="visibility:inherit;float:initial"></div>
+                    <div class="op-info-box js-op-spin-loaded" style="display:none">
                         <ul>
                             <li><?php _e('Space occupied by images:', 'op-bir'); ?> <span id="statDiskSpaceImg">-</span></li>
                             <li><?php _e('Saved images:', 'op-bir'); ?> <span id="staIimages">-</span></li>
@@ -38,7 +39,8 @@ function op_view_container()
                 </div>
                 <div class="op-block">
                     <div class="op-form-title"><?php _e('DISTRIBUTION OF IMAGES', 'op-bir'); ?></div>
-                    <div class="grid-second-row-chart">
+                    <div class="spinner js-op-spin-preload" style="visibility:inherit;float:initial"></div>
+                    <div class="grid-second-row-chart js-op-spin-loaded"  style="display:none">
                         <div class="op-chart-pie">
                             <canvas id="chart_dim"></canvas>
                         </div>
@@ -117,7 +119,7 @@ function op_block_bulk()
 ?>
     <div class="op-vertical-block">
         <div class="op-vert-item">
-            <div class="op-form-title"><?php _e('Bulk image resizer', 'op-bir'); ?></div>
+            <div class="op-form-title"><?php _e('BULK IMAGE RESIZER', 'op-bir'); ?></div>
             <div class="op-alert">
                 <p>
                     <?php _e('<b> Warning: </b> The original images will be resized and overwritten, so it is always best to backup before running the script.', 'op-bir'); ?>

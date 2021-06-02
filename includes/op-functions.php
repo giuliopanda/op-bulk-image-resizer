@@ -62,22 +62,45 @@ function html_select_quality($val) {
  */
 function get_total_img() {
     global $wpdb;
-    return $wpdb->get_var("SELECT count(ID) as tot FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\") AND post_status = \"inherit\" AND post_type = \"attachment\" ");
+    return $wpdb->get_var("SELECT count(ID) as tot FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\")  AND post_type = \"attachment\" ");
 }
 
 
 
 /**
  * Ottimizza e fa il resize di una singola immagine
- * @param int $post_id
+ * @param int $attachment_id
  * @return Wp_Error|Array ['path'=>string, 'file'=>string, 'width'=>int, 'height'=>int, 'mime-type'=>string]
  */
-function op_optimize_single_img($post_id)
+function op_optimize_single_img($attachment_id)
 {
     list($width, $height, $quality) = op_get_resize_options();
-
-    $path_img = wp_get_original_image_path($post_id);
+    $path_img = wp_get_original_image_path($attachment_id);
     if (file_is_valid_image($path_img)) {
+        $resize = true;
+        /**
+         * Resize image while bulk. 
+         * Check whether to resize the image. You can choose custom width and height.
+         *
+         * @since 0.9.5
+         *
+         * @param string $filename
+         * @param int $attachment_id
+         * @return boolean|array [width,height]
+         */
+        $ris_filter = apply_filters( 'op_bir_resize_image_bulk', wp_basename($path_img), $attachment_id);
+        if (is_array($ris_filter) && count($ris_filter) == 2) {
+            if (array_key_exists('width', $ris_filter) && array_key_exists('height', $ris_filter)) {
+                $width = $ris_filter['width'];
+                $height = $ris_filter['height'];
+            } else {
+                $width = array_shift($ris_filter);
+                $height = array_shift($ris_filter);
+            }	
+        } elseif (is_bool($ris_filter)) {
+            $resize = $ris_filter;
+        }
+        if (!$resize) return $upload;
         $img = wp_get_image_editor($path_img);
 
         if (!is_wp_error($img)) {
@@ -86,10 +109,10 @@ function op_optimize_single_img($post_id)
             }
             $img->set_quality($quality);
             $save = $img->save($path_img);
-            $meta = wp_get_attachment_metadata($post_id, true);
+            $meta = wp_get_attachment_metadata($attachment_id, true);
             $meta['width'] = $save['width'];
             $meta['height'] = $save['height'];
-            wp_update_attachment_metadata($post_id, $meta);
+            wp_update_attachment_metadata($attachment_id, $meta);
             // 
             return $save;
         } else {
@@ -101,7 +124,6 @@ function op_optimize_single_img($post_id)
 }
 
 /**
- * NON LA USO ANCORA!
  * Ogni volta che vengono ricaricate le statistiche viene salvato un nuovo punto. Questa funzione cancella quelli vecchi.
  * @param Array $jstat ['timestamp'=>bytes, ] è il jstat['data_bar']
  */
@@ -122,13 +144,13 @@ function op_clean_space_chart($jstat)
             // se sono passati più di 30 giorni tengo l'ultimo risultato del mese purché non differente dal mese successivo (perché ho invertito l'array)
             if (!isset($adding_dates[substr($string_date, 0, 6)]) && $v != end($jstatnew)) {
                 $jstatnew[$jk] = $v;
-                $adding_dates[substr($string_date, 0, 6) . "000000"] = $v;
+                $adding_dates[substr($string_date, 0, 6) ] = $v;
             }
         } else if ($key_date <= $old) {
             // se è passato più di un giorno, ma meno di 30 ne memorizzo uno al giorno
             if (!isset($adding_dates[substr($string_date, 0, 8)])) {
                 $jstatnew[$jk] = $v;
-                $adding_dates[substr($string_date, 0, 8) . "0000"] = $v;
+                $adding_dates[substr($string_date, 0, 8) ] = $v;
             }
         } else {
             // Oggi e ieri li memorizzo tutti purché diversi dall'ultimo valore registrato
@@ -139,6 +161,22 @@ function op_clean_space_chart($jstat)
     }
     return array_reverse($jstatnew, true);
 }
+
+/**
+ * Converte le statistiche dello spazio nei dati per il grafico
+ * @param array $data_size [timestamp:bytes]
+ * @return array ['labels'=>[],'datasets'=>[0=>['data'=>[]]]]
+ */
+function op_convert_space_to_graph($data_size) {
+    $dataset_size = ['labels'=>[],'datasets'=>[0=>['data'=>[]]]];
+	// "data_size":["timestamp":bytes]
+	foreach ($data_size as $timestamp =>$ds) {
+		$dataset_size['labels'][] = date_i18n( 'd-M H:i', $timestamp );
+		$dataset_size['datasets'][0]['data'][] = round($ds /(1024*1024),2);
+	}
+	return $dataset_size;
+}
+
 
 /**
  * C'è differenza tra come vengono salvati i dati e come vengono rappresentati.
@@ -219,7 +257,7 @@ function prepare_images_stat()
 {
     global $wpdb;
     $images_file_size = 0;
-    $tot_img = $wpdb->get_results("SELECT ID, post_mime_type, post_title FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\") AND post_status = \"inherit\" AND post_type = \"attachment\" ");
+    $tot_img = $wpdb->get_results("SELECT ID, post_mime_type, post_title FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\")  AND post_type = \"attachment\" ");
     $temp_attacment_meta = $wpdb->get_results("SELECT *  FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` = \"_wp_attachment_metadata\"");
     $upload_dir = wp_upload_dir();
     $attacment_meta = array();
@@ -229,10 +267,12 @@ function prepare_images_stat()
             $attacment_meta[$am->post_id] = ['width' => $temp['width'], 'height' => $temp['height'], 'file' => $temp['file'], 'filesize' => filesize($upload_dir['basedir'] . "/" . $temp['file'])];
         }
     }
+   
     unset($temp_attacment_meta);
     $array_unique = array();
     $chart_scatter = [];
     $gap = floor(count($tot_img) / 100);
+    if ($gap == 0) $gap = 1;
     foreach ($tot_img as $img) {
         $post_mime_type = str_replace("image/", "", $img->post_mime_type);
         if (!isset($array_unique[$post_mime_type])) {
@@ -247,9 +287,10 @@ function prepare_images_stat()
                 $chart_scatter[$post_mime_type] = [];
             }
             $xkey = (floor($att['width'] / $gap) * $gap) . "x" . (floor($att['height'] / $gap) * $gap);
-
-            if (!isset($chart_scatter[$post_mime_type][$xkey])) {
-                $chart_scatter[$post_mime_type][$xkey] = ['x' => $att['width'], 'y' => $att['height'], 'img' => ($img->post_title), 'tot' => 1, 'r' => 2];
+            if (count($tot_img) < 100) {
+                $chart_scatter[$post_mime_type][] = ['x' => $att['height'], 'y' => $att['width'], 'img' => ($img->post_title), 'tot' => 1, 'r' => 2];
+            } elseif (!isset($chart_scatter[$post_mime_type][$xkey])) {
+                $chart_scatter[$post_mime_type][$xkey] = ['x' => $att['height'], 'y' => $att['width'], 'img' => ($img->post_title), 'tot' => 1, 'r' => 2];
             } else {
                 $tot = $chart_scatter[$post_mime_type][$xkey]['tot'] + 1;
                 $img = $tot . " images";
@@ -259,7 +300,7 @@ function prepare_images_stat()
                 }
                 $width = round((($chart_scatter[$post_mime_type][$xkey]['width'] * ($tot - 1)) + $att['width']) / $tot);
                 $height = round((($chart_scatter[$post_mime_type][$xkey]['height'] * ($tot - 1)) + $att['height']) / $tot);
-                $chart_scatter[$post_mime_type][$xkey] = ['x' => $width, 'y' => $height, 'img' => $img, 'tot' => $tot, 'gap' => $gap, 'r' => $r];
+                $chart_scatter[$post_mime_type][$xkey] = ['x' => $height, 'y' => $width, 'img' => $img, 'tot' => $tot, 'gap' => $gap, 'r' => $r];
             }
         }
     }
@@ -291,14 +332,6 @@ function op_get_resize_options()
     $width = (int)get_option('op_resize_max_width', '1920');
     $height = (int)get_option('op_resize_max_height', '1080');
     $quality = (int)get_option('op_resize_quality', '75');
-    if ($quality <= 0) {
-        $quality = 85;
-    } elseif ($quality < 30) {
-        $quality = 30;
-    } elseif ($quality > 95) {
-        $quality = 95;
-    } elseif ($quality < 2 || $quality > 100) {
-        $quality = 85;
-    }
     return array($width, $height, $quality);
 }
+

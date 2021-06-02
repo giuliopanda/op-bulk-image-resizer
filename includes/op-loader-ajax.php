@@ -42,39 +42,32 @@ add_action( 'wp_ajax_op_save_configuration', 'op_save_configuration' );
 
 /**
  *  Calcolo le statistiche
- * LA STRUTTURA DEL JSON che salva su op_resize_statistics è:
-{"tot_images":4751,"files_size":2511986974,"images_size":2415397165,"data_bar":["timestamp":bytes,"timestamp":bytes]}
- * l'output è un json con questa struttura
- * {"tot_images":int,"files_size":bytes,"images_size":bytes,"data_pie":{"labels":["jpeg","png","tiff"],"datasets":[{"data":[4717,30,4],"backgroundColor":["rgb(54, 162, 235)","rgb(255, 99, 132)","rgb(255, 205, 86)","rgb(43, 177, 164)","rgb(125, 54, 204)","rgb(142, 31, 31)","rgb(77, 77, 77)"]}]},"data_bar":{"labels":["01-01","01-01","01-01"],"datasets":[{"data":[4565397165,4555397165,2435397165],"backgroundColor":["rgb(255, 205, 86)","rgb(255, 205, 86)","rgb(75, 192, 192)"]}]}}
+ * Stampa un json con questa struttura:
+{"tot_images":4751,"last_update":timestamp,"images_size":bytes,"data_size":{"datasets":[{"label":[],"data":[]}], "scatter"=>:{"datasets":[{"label":"jpeg","data"[{"x":256,"y":320,"img":"3 images","tot":3,"gap":47,"r":3}, ...]}]
  * @link /wp-admin/admin-ajax.php?action=op_calc_stats
 */
  
 function op_calc_stats() {
 	global $wpdb;
 	$stat = get_option('op_resize_statistics','[]');
-	
 	$images_file_size = 0;
 	$jstat = json_decode($stat, true);
 	if (!is_array($jstat)) {
 		$jstat = array();
-	} else {
-		// cache	
 	}
-	
 	// carico i dati a partire dai post images 
 	list($tot_img, $images_file_size, $datasets) = prepare_images_stat();
 	$jstat['data_size'][time()] = $images_file_size;
-	$jstat['data_size'] = op_clean_space_chart($jstat['data_size']);
-	$jstat['tot_images'] 	= $tot_img;
-	$jstat['images_size'] 	= $images_file_size;
-	$jstat['last_update'] 	= time();
-	update_option('op_resize_statistics', json_encode($jstat));
-	
-	$jstat['scatter'] 		= ['datasets'=>$datasets];
+	$jstat['data_size'] 		= op_clean_space_chart($jstat['data_size']);
+	$jstat['tot_images'] 		= $tot_img;
+	$jstat['images_size'] 		= $images_file_size;
+	$jstat['last_update'] 		= time();
+	update_option('op_resize_statistics', json_encode($jstat), false);
+	$jstat['scatter'] 			= ['datasets'=>$datasets];
+	$jstat['data_size_graph'] 	= op_convert_space_to_graph($jstat['data_size']);
  	wp_send_json($jstat);
 	die;
 }
-
 add_action( 'wp_ajax_op_calc_stats', 'op_calc_stats' ); 
 
 
@@ -89,7 +82,7 @@ function fn_ajax_resize_all()
 	//wp_send_json(['done' => $done ]);
 	//die;
 	$start = microtime(true);
-	$post_ids = $wpdb->get_results("SELECT ID , guid FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\") AND post_status = \"inherit\" AND post_type = \"attachment\" ORDER by ID DESC LIMIT " . $done . ", 200");
+	$post_ids = $wpdb->get_results("SELECT ID , guid FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\") AND post_type = \"attachment\" ORDER by ID DESC LIMIT " . $done . ", 200");
 
 	foreach ($post_ids as $post) {
 		if ((microtime(true) - $start) > 20) {
@@ -98,7 +91,7 @@ function fn_ajax_resize_all()
 		$done++;
 		op_optimize_single_img($post->ID);
 	}
-	update_option('op_resize_images_done',  $done);
+	update_option('op_resize_images_done',  $done, false);
 	wp_send_json(['done' => $done]);
 }
 add_action('wp_ajax_op_resize_all', 'fn_ajax_resize_all');
@@ -106,10 +99,12 @@ add_action('wp_ajax_op_resize_all', 'fn_ajax_resize_all');
 // Aggiorno in bach tutte le immagini
 function fn_ajax_check_resizing()
 {
+	$stat = get_option('op_resize_statistics', '[]');
+	$jstat = json_decode($stat, true);
 	$done = get_option('op_resize_images_done',  0);
 	list($tot_img, $images_file_size, $datasets) = prepare_images_stat();
 	//update_option('op_resize_images_done',  $done);
-	wp_send_json(['done'=> $done, 'file_size' => $images_file_size, 'scatter' => ['datasets' => $datasets]]);
+	wp_send_json(['done'=> $done, 'file_size' => $images_file_size, 'scatter' => ['datasets' => $datasets], 'data_size_graph'=>  op_convert_space_to_graph($jstat['data_size']) ]);
 }
 add_action('wp_ajax_op_check_resizing', 'fn_ajax_check_resizing');
 
@@ -132,25 +127,10 @@ function fn_end_resize_all()
 	$jstat['tot_images'] 	= $tot_img;
 	$jstat['images_size'] 	= $images_file_size;
 	$jstat['last_update'] 	= time();
-	update_option('op_resize_statistics', json_encode($jstat));
-	wp_send_json(['file_size' => $images_file_size, 'old_file_size' => $old_file_size, 'scatter' => ['datasets' => $datasets]]);
+	update_option('op_resize_statistics', json_encode($jstat), false);
+	wp_send_json(['file_size' => $images_file_size, 'old_file_size' => $old_file_size, 'scatter' => ['datasets' => $datasets], 'data_size_graph'=>  op_convert_space_to_graph($jstat['data_size'])]);
 }
 add_action('wp_ajax_op_end_resize_all', 'fn_end_resize_all');
-
-/**
- * TEST PER VERIFICARE CHE FUNZIONI BENE IL SISTEMA DELLE STATISTICHE
- * @link /wp-admin/admin-ajax.php?action=op_test_data_size
- */
-function fn_test_data_size() {
-	$stat = get_option('op_resize_statistics', '[]');
-	
-	$jstat = json_decode($stat, true);
-	$jstat['data_size'] = op_clean_space_chart($jstat['data_size']);
-
-	var_dump ($jstat['data_size']);
-}
-add_action('wp_ajax_op_test_data_size', 'fn_test_data_size');
-
 
 
 /**

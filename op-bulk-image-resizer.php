@@ -6,15 +6,15 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @since             0.9.0
+ * @since             0.1.0
  * @package           op-bulk-image-resizer
  *
  * @wordpress-plugin
  * Plugin Name:       Optica Press: bulk image resizer
  * Description:       Bulk image resizer and uload resize
  * Version:           1.0.0
- * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires at least: 5.3
+ * Requires PHP:      5.6
  * Author:            Giulio Pandolfelli
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -22,7 +22,10 @@
  * Domain Path: 	  /languages
  */
 
+
 if (!defined('WPINC')) die;
+require_once(plugin_dir_path( __FILE__ ) . "includes/op-functions.php");
+require_once(plugin_dir_path( __FILE__ ) . "includes/op-loader.php");
 if (!is_admin()) return;
 /**
  * Currently plugin version. https://semver.org
@@ -35,14 +38,10 @@ $op_execute_plugin = (isset($_REQUEST['page']) && @$_REQUEST['page'] == $op_plug
 
 require_once(plugin_dir_path( __FILE__ ) . "op-activation.php");
 require_once(plugin_dir_path( __FILE__ ) . "includes/op-loader-ajax.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/op-functions.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/op-loader-add-image-column.php");
 require_once(plugin_dir_path( __FILE__ ) . "includes/op-i18n.php");
 require_once(plugin_dir_path( __FILE__ ) . "admin/partials/op-partials.php");
 require_once(plugin_dir_path( __FILE__ ) . "admin/op-admin.php");
 
 // Chiamo la funzione op_activate quando il plugin viene attivato
-register_activation_hook(__FILE__, 'op_activate');
-
-
-
+//register_activation_hook(__FILE__, 'op_activate');
+register_uninstall_hook(__FILE__, 'op_uninstall');

@@ -86,15 +86,13 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 
 ```
 
-== Screenshots ==
+# Screenshots
+ 
+![L'aspetto della pagina per il bulk del resize](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-1.jpg)
 
-1. L'aspetto della pagina per il bulk del resize
-![Image of Yaktocat](https://github.com/giuliopanda/op-bulk-image-resizer/assets/screenshot-1.jpg)
 
+![Il menu da cui si accede a questa pagina](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-3.jpg)
 
-2. Il menu da cui si accede a questa pagina
-3. La colonna aggiunta su media library
-4. Il bulk aggiunto su media library
 
 == Changelog ==
 

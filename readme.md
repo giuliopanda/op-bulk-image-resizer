@@ -1,4 +1,4 @@
-Bulk image resizer
+Bulk image resizer for wordpress
 
 # Description
 
@@ -93,19 +93,20 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 ![Il menu da cui si accede a questa pagina](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-3.jpg)
 
 
-== Changelog ==
+# Changelog
 
-= 1.0.0 - 2021-06-02 =
+### 1.0.0 - 2021-06-02 
 * Fixed: complete bulk messages
 * Added: HHD Space Graph
 * Test: On wordpress 5.3 and fix code for PHP 5.6
 * Fixed: Resize on post ulpoad don't work.
 
-= 0.9.0 - 2021-05-20 =
+### 0.9.0 - 2021-05-20 
 * Work version Bulk image resize 
 * Added: language Translate
 
 
-== Credits ==
+# Credits
 The OP Bulk image resizer was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
+
 https://www.chartjs.org/ per i grafici.

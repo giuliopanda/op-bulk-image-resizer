@@ -2,57 +2,56 @@ Bulk image resizer for wordpress
 
 # Description
 
-Bulk image resize permette di ottimizzare le immagini caricate su wordpress.
+Bulk image resize allows you to optimize images uploaded to wordpress.
 
-- Puoi fare il resize di tutte le immagini con un solo click.
-- È ottimizzato per velocizzare il processo di bulk. 1000 immagini richiedono pochi minuti su di un normale server.
-- Puoi abilitare l'opzione di ottimizzare le immagini quando vengono caricate sul server. 
-- Permette di decidere le dimensioni massime delle immagini e la qualità in cui devono essere compresse.
-- Aggiunge su media-library (versione lista) la possibilità di selezionare le immagini che si vuole ottimizzare
-- Sempre su media-library (versione lista) aggiunge una colonna informazioni aggiuntive sull'immagine.
-- Tramite grafici permette di monitorare lo stato delle immagini sul server
-- Possibilità di usare hook specifici per personalizzare le opzioni di ottimizzazione.
+- You can resize all images with just one click.
+- It is optimized to speed up the bulk process. 1000 images take a few minutes on a normal server.
+- You can enable the option to optimize images when uploaded to the server.
+- Allows you to decide the maximum size of the images and the quality in which they should be compressed.
+- Adds to media-library (list version) the possibility to select the images to be optimized
+- Still on media-library (list version) it adds an additional information column on the image.
+- Through graphics it allows you to monitor the status of the images on the server
+- Ability to use specific hooks to customize optimization options.
 
  The GitHub repo can be found at [https://github.com/WebDevStudios/custom-post-type-ui](https://github.com/WebDevStudios/custom-post-type-ui). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
 
 # Installation
 
-Dopo aver installato il plugin, vai su Tools > optica press bulk image resize per impostare il plugin.
-Puoi ridimensionare singole immagini o a gruppi da media library mode list.
+After installing the plugin, **go to Tools** > **optica press bulk image resize** to set up the plugin.
+You can resize single images or groups from media library (mode list).
 
 # Frequently Asked Questions
 
-### Perché usare Bulk image resizer? 
-Perché è opensource e non hai limiti nell'uso. Ti permetterà di rendere il tuo sito più veloce e ti farà risparmiare spazio. 
+### Why use Bulk image resizer?
+Because it is opensource and you have no limits in use. It will allow you to make your site faster and will save you space.
 
-### Che formati supporta? 
-Supporta i formati jpg e png in accordo con le direttive di wordpress. Infatti By default you can only upload JPG and PNG to your pages and posts. 
+### What formats does it support?
+It supports jpg and png formats in accordance with wordpress directives. In fact By default you can only upload JPG and PNG to your pages and posts.
 
-### È possibile decidere oltre alla posizione anche la qualità delle immagini? 
-Si, si può decidere se comprimere le immagini ad alta qualità, media o bassa.
+### Is it possible to decide not only the position but also the quality of the images?
+Yes, you can decide whether to compress high, medium or low quality images.
 
-### Una volta ridimensionate si può tornare indietro?
-No, le immagini ottimizzate sovrascivono le immagini originali per cui se non si fa un backup non è possibile tornare indietro.
+### Can I go back once resized?
+No, the optimized images overwrite the original images so if you don't make a backup you can't go back.
 
-### Posso decidere quali immagini ottimizzare?=
-Sì, puoi selezionare da media library (versione lista) le immagini da ottimizzare, oppure utilizzare gli hook per estendere lo script.
+### Can I decide which images to optimize?
+Yes, you can select from the media library (list version) the images to be optimized, or use the hooks to extend the script.
 
 ### What about Optica Press Bulk image resizer
+When you upload an image to wordpress, thumbs are created for the template, but the uploaded image is saved and sometimes used.
+Bulk image resizer resizes uploaded images to optimize site speed and server space.
 
-Quando carichi un'immagine su wordpress vengono create le thumbs per il template, ma l'immagine caricata viene salvata e talvolta usata. 
-Bulk image resizer ridimensiona le immagini caricate così da ottimizzare la velocità del sito e lo spazio nel server.
+**Be careful**
+Images are overwritten at the size you set, so it's important to make a backup first.
+They assume no responsibility for any malfunctions or loss of information resulting from the use of the plugin.
 
-**Attenzione**
-Le immagini vengono sovrascritte alle dimensioni impostate, per cui è importante prima fare un backup. 
-Non si assumono responsabilità per qualsiasi malfunzionamento o perdita di informazioni derivanti dall'uso del plugin.
-
-# Personalizzare il codice con i filtri
-È possibile personalizzare quali immagini ottimizzare e come attraverso due filtri
+# Customize the code with filters
+You can customize which images to optimize and how through two filters
 
 ```php
 /**
- * Ridimensiona solo le immagini caricate dagli articoli
+ * Only resize images uploaded by articles
  * @return  Boolean|Array [width:int,height:int]
  */
 function fn_bir_resize_image_bulk ($filename, $attachment_id) {
@@ -65,12 +64,12 @@ function fn_bir_resize_image_bulk ($filename, $attachment_id) {
 	}
 	return false;
 }
-// Viene chiamato durante il bulk.
+// Called during bulk.
 add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
 
 
 /**
- * Ridimensiona solo le immagini caricate dagli articoli quando vengono caricati
+ * Only resize images uploaded by articles when they are uploaded
  * @return  Boolean|Array [width:int,height:int]
  */
 function fn_bir_resize_image_uploading ($filename, $post_id) {
@@ -80,17 +79,17 @@ function fn_bir_resize_image_uploading ($filename, $post_id) {
 	}
 	return false;
 }
-// Viene chiamato quando viene caricata una nuova immagine
+// Called when a new image is loaded
 add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10, 2);
 
 ```
 
 # Screenshots
  
-![L'aspetto della pagina per il bulk del resize](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-1.jpg)
+![The appearance of the page for the resize bulk](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-1.jpg)
 
 
-![Il menu da cui si accede a questa pagina](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-3.jpg)
+![The column added to the media library](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-3.jpg)
 
 
 # Changelog
@@ -99,14 +98,14 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 * Fixed: complete bulk messages
 * Added: HHD Space Graph
 * Test: On wordpress 5.3 and fix code for PHP 5.6
-* Fixed: Resize on post ulpoad don't work.
+* Fixed: Post upload resize doesn't work
 
 ### 0.9.0 - 2021-05-20 
-* Work version Bulk image resize 
+* first working version
 * Added: language Translate
 
 
 # Credits
 The OP Bulk image resizer was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
 
-https://www.chartjs.org/ per i grafici.
+for graphs I use https://www.chartjs.org/

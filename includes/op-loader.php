@@ -202,4 +202,5 @@ function op_uninstall() {
 	delete_option('op_resize_max_height');
 	delete_option('op_resize_quality');
 	delete_option('op_resize_on_upload');
+	delete_option('op_resize_images_done');
 }

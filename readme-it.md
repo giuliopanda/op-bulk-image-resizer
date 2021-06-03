@@ -76,18 +76,18 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 - [nuova funzionalità] Aggiungere colonna su media **FATTO**
 - Gestione degli errori durante la conversione. **FATTO**
 - [nuova funzionalità] resize sul caricamento **FATTO** ok
-- Istallazione/disinstalla **in lavorazione** (quando disistalli rimuovi le option)
+- Istallazione/disinstalla **FATTO** (quando disistalli rimuove le option)
 - [nuova funzionalità] Hooks  **FATTO Da testare**
-- Guida **in lavorazione**
+- Readme.txt **in lavorazione**
 - Spiegazioni dettagliate in italiano/inglese (Entro il 6 giugno)
 - Verificare cosa bisogna fare per caricare il plugin su wordpress (Entro il 6 giugno)
 - Revisione traduzione  (inizio 6 giugno)
 - Multisite test
-- [nuova funzionalità] Grafico dello spazio occupato nel tempo.
-- Test sui tipi di dati che si possono convertire
-- Screenshot
+- [nuova funzionalità] Grafico dello spazio occupato nel tempo.  **FATTO**
+- Test sui tipi di dati che si possono convertire (jpg e png) **FATTO**
+- Screenshot **FATTO**
 
-Caricamento su wordpress (13 giugno)
+Caricamento su wordpress (6 giugno)
 
 
 # IDEE PER LE PROSSIME VERSIONI:
@@ -125,3 +125,4 @@ PLUGIN STRUTTURA
 https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/blob/master/plugin-name/plugin-name.php
 
 
+https://wordpress.org/plugins/developers/

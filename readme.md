@@ -47,11 +47,10 @@ Bulk image resizer ridimensiona le immagini caricate così da ottimizzare la vel
 Le immagini vengono sovrascritte alle dimensioni impostate, per cui è importante prima fare un backup. 
 Non si assumono responsabilità per qualsiasi malfunzionamento o perdita di informazioni derivanti dall'uso del plugin.
 
-== Hook  ==
-È possibile personalizzare quali immagini ottimizzare e come attraverso due hook
+# Personalizzare il codice con i filtri
+È possibile personalizzare quali immagini ottimizzare e come attraverso due filtri
 
 ```php
-
 /**
  * Ridimensiona solo le immagini caricate dagli articoli
  * @return  Boolean|Array [width:int,height:int]

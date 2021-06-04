@@ -11,7 +11,7 @@
 //
 add_filter('bulk_actions-upload', function ($bulk_actions) {
 	list($width, $height, $quality) = op_get_resize_options();
-	$bulk_actions['gp-resize-original-images'] = sprintf(__('Optica resize: (%s)', 'op-bir'), $width . "x" . $height);
+	$bulk_actions['gp-resize-original-images'] = sprintf(__('Bulk image resize: (%s)', 'op-bir'), $width . "x" . $height);
 	return $bulk_actions;
 });
 
@@ -33,7 +33,7 @@ add_filter('handle_bulk_actions-upload', function ($redirect_url, $action, $post
  */
 function op_media_columns_filesize($posts_columns)
 {
-	$posts_columns['filesize'] = __('File Size', 'my-theme-text-domain');
+	$posts_columns['bir'] = __('Bulk image Resize', 'op-bir');
 	return $posts_columns;
 }
 add_filter('manage_media_columns', 'op_media_columns_filesize');
@@ -47,7 +47,7 @@ add_filter('manage_media_columns', 'op_media_columns_filesize');
  */
 function op_media_custom_column_filesize($column_name, $post_id)
 {
-	if ('filesize' !== $column_name) {
+	if ('bir' !== $column_name) {
 		return;
 	}
 	list($width, $height, $quality) = op_get_resize_options();

@@ -16,8 +16,8 @@
  */
 function opbir_add_admin_menu() {
 	$menu_id = add_management_page(
-		__('Optica press bulk image resizer', 'op-bir'),
-		'Optica press bulk image resizer',
+		__('Bulk image resizer', 'op-bir'),
+		'Bulk image resizer',
 		'manage_options',
 		'op-bulk-image-resizer',
 		'op_view_container'

@@ -1,4 +1,4 @@
-=== Optica Press Bulk image resizer ===
+=== Bulk image resizer ===
 Contributors: giuliopanda 
 Donate link: giuliopanda@gmail.com
 Tags: convert,image,Optimize,resize
@@ -7,7 +7,7 @@ Tested up to: 5.7.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Bulk image resizer.
 
@@ -24,11 +24,11 @@ Bulk image resize allows you to optimize images uploaded to wordpress.
 - Through graphics it allows you to monitor the status of the images on the server
 - Ability to use specific hooks to customize optimization options.
 
- The GitHub repo can be found at [https://github.com/WebDevStudios/custom-post-type-ui](https://github.com/WebDevStudios/custom-post-type-ui). Please use the Support tab for potential bugs, issues, or enhancement ideas.
+ The GitHub repo can be found at [https://github.com/giuliopanda/op-bulk-image-resizer](https://github.com/giuliopanda/op-bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
 == Installation ==
 
-After installing the plugin, **go to Tools** > **optica press bulk image resize** to set up the plugin.
+After installing the plugin, **go to Tools** > **Bulk image resize** to set up the plugin.
 You can resize single images or groups from media library (mode list).
 
 == Frequently Asked Questions ==
@@ -48,7 +48,7 @@ No, the optimized images overwrite the original images so if you don't make a ba
 = Can I decide which images to optimize? =
 Yes, you can select from the media library (list version) the images to be optimized, or use the hooks to extend the script.
 
-= What about Optica Press Bulk image resizer =
+= What about Bulk image resizer =
 
 When you upload an image to wordpress, thumbs are created for the template, but the uploaded image is saved and sometimes used.
 Bulk image resizer resizes uploaded images to optimize site speed and server space.
@@ -99,9 +99,8 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 == Screenshots ==
 
 1. The appearance of the page for the resize bulk
-2. Toolbar > menu
-3. The column added to the media library
-4. The bulk added to the media library
+2. The column added to the media library
+3. The bulk added to the media library
 
 == Changelog ==
 
@@ -117,5 +116,6 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 
 
 == Credits ==
-The OP Bulk image resizer was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
-https://www.chartjs.org/ per i grafici.
+The Bulk image resize was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
+for graphs I use https://www.chartjs.org/ per i grafici.
+for translation I use Loco Translate 

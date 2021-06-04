@@ -1,7 +1,10 @@
-# DESCRIZIONE
-Bulk image resize permette di comprimere e fare il resize delle immagini caricate su wordpress.
+Bulk image resizer for wordpress
 
-- Puoi fare il resize delle immagini con un solo click.
+# Description
+
+Bulk image resize permette di ottimizzare le immagini caricate su wordpress.
+
+- Puoi fare il resize di tutte le immagini con un solo click.
 - È ottimizzato per velocizzare il processo di bulk. 1000 immagini richiedono pochi minuti su di un normale server.
 - Puoi abilitare l'opzione di ottimizzare le immagini quando vengono caricate sul server. 
 - Permette di decidere le dimensioni massime delle immagini e la qualità in cui devono essere compresse.
@@ -10,28 +13,47 @@ Bulk image resize permette di comprimere e fare il resize delle immagini caricat
 - Tramite grafici permette di monitorare lo stato delle immagini sul server
 - Possibilità di usare hook specifici per personalizzare le opzioni di ottimizzazione.
 
-# ISTRUZIONI OPERATIVE
-*Una volta preso in mano questo codice la descrizione delle azioni che si possono compiere*
+ The GitHub repo can be found at [https://github.com/WebDevStudios/custom-post-type-ui](https://github.com/WebDevStudios/custom-post-type-ui). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
- ## Istallazione e uso
- *Descrizione su come si usa il codice descritto.* 
 
- ## HOOKS
-#### fn_bir_resize_image_bulk($filename, $attachment_id);
-Personalizza il resize durante il bulk
-ritorna Boolean|Array. 
-Se torna true fa il resize dell'immagine se torna false non lo fa.
-Se invece torna un array con width,height (o 0,1) fa il resize alla dimensione scelta.
+# Installation
 
-#### fn_bir_resize_image_uploading ($filename, $post_id)
-Personalizza il resize quando si carica un'immagine. $post_id può essere 0 se si sta caricando un'immagine direttamente da media.
-ritorna Boolean|Array. 
-Se torna true fa il resize dell'immagine se torna false non lo fa.
-Se invece torna un array con width,height (o 0,1) fa il resize alla dimensione scelta.
+Dopo aver installato il plugin, vai su Tools >Bulk image resize per impostare il plugin.
+Puoi ridimensionare singole immagini o a gruppi da media library mode list.
+
+# Frequently Asked Questions
+
+### Perché usare Bulk image resizer? 
+Perché è opensource e non hai limiti nell'uso. Ti permetterà di rendere il tuo sito più veloce e ti farà risparmiare spazio. 
+
+### Che formati supporta? 
+Supporta i formati jpg e png in accordo con le direttive di wordpress. Infatti By default you can only upload JPG and PNG to your pages and posts. 
+
+### È possibile decidere oltre alla posizione anche la qualità delle immagini? 
+Si, si può decidere se comprimere le immagini ad alta qualità, media o bassa.
+
+### Una volta ridimensionate si può tornare indietro?
+No, le immagini ottimizzate sovrascivono le immagini originali per cui se non si fa un backup non è possibile tornare indietro.
+
+### Posso decidere quali immagini ottimizzare?=
+Sì, puoi selezionare da media library (versione lista) le immagini da ottimizzare, oppure utilizzare gli hook per estendere lo script.
+
+### What about Bulk image resizer
+
+Quando carichi un'immagine su wordpress vengono create le thumbs per il template, ma l'immagine caricata viene salvata e talvolta usata. 
+Bulk image resizer ridimensiona le immagini caricate così da ottimizzare la velocità del sito e lo spazio nel server.
+
+**Attenzione**
+Le immagini vengono sovrascritte alle dimensioni impostate, per cui è importante prima fare un backup. 
+Non si assumono responsabilità per qualsiasi malfunzionamento o perdita di informazioni derivanti dall'uso del plugin.
+
+# Personalizzare il codice con i filtri
+È possibile personalizzare quali immagini ottimizzare e come attraverso due filtri
 
 ```php
 /**
  * Ridimensiona solo le immagini caricate dagli articoli
+ * @return  Boolean|Array [width:int,height:int]
  */
 function fn_bir_resize_image_bulk ($filename, $attachment_id) {
 	$parent_id = wp_get_post_parent_id( $attachment_id);
@@ -43,11 +65,13 @@ function fn_bir_resize_image_bulk ($filename, $attachment_id) {
 	}
 	return false;
 }
+// Viene chiamato durante il bulk.
 add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
 
 
 /**
  * Ridimensiona solo le immagini caricate dagli articoli quando vengono caricati
+ * @return  Boolean|Array [width:int,height:int]
  */
 function fn_bir_resize_image_uploading ($filename, $post_id) {
 	$post_type = get_post_type( $post_id );
@@ -56,73 +80,33 @@ function fn_bir_resize_image_uploading ($filename, $post_id) {
 	}
 	return false;
 }
+// Viene chiamato quando viene caricata una nuova immagine
 add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10, 2);
 
 ```
 
- # CHANGELOG e BACKUP
- Caricato su github la versione 0.9.0
- Inizio a lavorare la nuova versione (0.9.1)
- Il flusso di pubblicazione su github è:
-- lo lavoro su un wordpress.
-- A fine lavorazione o inizio nuova lavorazione lo copio in locale di github.
-- Quando sto ad un punto fermo e lo voglio caricare online prima provo a installarlo su una nuova versione di wordpress temporanea per provare che funzioni.
-- Se tutto va bene faccio il commit su github.
-
-# TODO
-- Multilingua - **FATTO**
-- Pulizia codice (rivedere la struttura delle cartelle) **FATTO**
-- GitHub (31 maggio) **FATTO**
-- [nuova funzionalità] Aggiungere colonna su media **FATTO**
-- Gestione degli errori durante la conversione. **FATTO**
-- [nuova funzionalità] resize sul caricamento **FATTO** ok
-- Istallazione/disinstalla **FATTO** (quando disistalli rimuove le option)
-- [nuova funzionalità] Hooks  **FATTO Da testare**
-- Readme.txt **in lavorazione**
-- Spiegazioni dettagliate in italiano/inglese (Entro il 6 giugno)
-- Verificare cosa bisogna fare per caricare il plugin su wordpress (Entro il 6 giugno)
-- Revisione traduzione  (inizio 6 giugno)
-- Multisite test
-- [nuova funzionalità] Grafico dello spazio occupato nel tempo.  **FATTO**
-- Test sui tipi di dati che si possono convertire (jpg e png) **FATTO**
-- Screenshot **FATTO**
-
-Caricamento su wordpress (6 giugno)
+# Screenshots
+ 
+![L'aspetto della pagina per il bulk del resize](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-1.jpg)
 
 
-# IDEE PER LE PROSSIME VERSIONI:
-- resize: min-width min-height valori minimi del resize che non devono essere superati
-- Una volta aggiunto min-width e min-height posso avvertire se ci sono immagini sotto quelle dimensioni.
-- Esportazione csv per excel dei dati convertiti (o delle immagini più piccole di... o delle immagini più grandi di...)
-
-- CONVERTI FORMATI!
-
-- resize delle thumbs
-
-- Test sulla conversione
-- filtra i tipi di dati da escludere nel resize (post_type, o non collegato)
-- permetti di ordinare i media per filesize
+![Il menu da cui si accede a questa pagina](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-3.jpg)
 
 
+# Changelog
 
-# BUG
-- i metadata sono ancora da verificare se vengono aggiornati bene
-- Se trovo metadata sbagliati come lo gestisco?
+### 1.0.0 - 2021-06-02 
+* Fixed: complete bulk messages
+* Added: HHD Space Graph
+* Test: On wordpress 5.3 and fix code for PHP 5.6
+* Fixed: Resize on post ulpoad don't work.
 
-# VALIDAZIONE
-*Descrizione su come testare il lavoro o/e l'elenco delle operazioni fatte per documentare che il codice funziona*
-## Test
-## Log
-
-
-# NOTE
-https://developer.wordpress.org/plugins/plugin-basics/
-https://developer.wordpress.org/coding-standards/wordpress-coding-standards/
+### 0.9.0 - 2021-05-20 
+* Work version Bulk image resize 
+* Added: language Translate
 
 
+# Credits
+The OP Bulk image resizer was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
 
-PLUGIN STRUTTURA
-https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/blob/master/plugin-name/plugin-name.php
-
-
-https://wordpress.org/plugins/developers/
+https://www.chartjs.org/ per i grafici.

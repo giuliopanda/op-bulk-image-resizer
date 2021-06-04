@@ -16,7 +16,7 @@ function op_view_container()
 ?>
     <div class="wrap">
         <div id="opContainer" class="op-container">
-            <h1 class="wp-heading-inline"><?php _e('OP BULK IMAGE RESIZE', 'op-bir'); ?></h1>
+            <h1 class="wp-heading-inline"><?php _e('BULK IMAGE RESIZE', 'op-bir'); ?></h1>
             <div class="op-grid-2-col op-first-grid">
                 <div class="op-block">
                     <?php op_block_setup(); ?>
@@ -140,7 +140,7 @@ function op_block_bulk()
             <h4><?php _e('Notifications', 'op-bir'); ?></h4>
             <div class="op-info-box" id="opInfoBox">
                 <div class="op-alert-info">
-                    <?php _e('Remember that you can optimize a group of images from media> library list view. Just select the images and resize them from group actions> op Resize (widthXheight)', 'op-bir'); ?>
+                    <?php _e('Remember that you can optimize a group of images from media> library list view. Just select the images and resize them from group actions > Resize (widthXheight)', 'op-bir'); ?>
                 </div>
                 <?php if ($done > $total_images / 100 && $done * 1.2 < $total_images) : ?>
                     <div class="op-alert-warning ">
@@ -171,13 +171,13 @@ function op_popup_activation_plugin()
         <div class="notice notice-info is-dismissible">
             <div class="op-row-notice">
                 <div class="op-row-notice-half">
-                    <h4 class="op-notice-half"><?php _e('Thank you for downloading OPTICA IMAGE resize bulk', 'op-bir'); ?></h4>
+                    <h4 class="op-notice-half"><?php _e('Thank you for downloading Bulk image resize', 'op-bir'); ?></h4>
                 </div>
                 <div class="op-info-box">
                     <p><?php _e("The plugin is opensource and without additional paid plans. Using this plugin you have three features:", 'op-bir'); ?>
                     </p>
                     <ul class="ul-disc">
-                        <li><?php _e("<b>Inside Tools > Optica press bulk image resizer </b> set the settings and you can start the bulk to resize all images", 'op-bir'); ?></li>
+                        <li><?php _e("<b>Inside Tools > Bulk image resizer </b> set the settings and you can start the bulk to resize all images", 'op-bir'); ?></li>
                         <li><?php _e("Among the settings you can decide to allow the plugin to resize images when they are loaded.", 'op-bir'); ?></li>
                         <li><?php _e("Finally On <b> Media Library in list view </b> you have a new column that shows you the image data and the possibility to resize for groups of selected images.", 'op-bir'); ?></li>
                     </ul>

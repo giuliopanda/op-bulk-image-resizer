@@ -6,13 +6,13 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @since             0.1.0
  * @package           op-bulk-image-resizer
  *
  * @wordpress-plugin
- * Plugin Name:       Optica Press: bulk image resizer
- * Description:       Bulk image resizer and uload resize
- * Version:           1.0.0
+ * Plugin Name:       Bulk image resizer
+ * Plugin URI:        https://github.com/giuliopanda/op-bulk-image-resizer
+ * Description:       Optimize images uploaded to the server. Go to "tools" to configure the plugin or to perform batch optimization. Go to "Media library (list view)" to optimize individual images.
+ * Version:           1.0.1
  * Requires at least: 5.3
  * Requires PHP:      5.6
  * Author:            Giulio Pandolfelli

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Optica Press: bulk image resizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-28 06:53+0000\n"
+"POT-Creation-Date: 2021-06-04 07:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: GIULIO PANDOLFELLI GIULIOPANDA@GMAIL.COM\n"
 "Language-Team: \n"
@@ -16,212 +16,229 @@ msgstr ""
 "X-Loco-Version: 2.5.2; wp-5.7.2\n"
 "X-Domain: op-bir"
 
-#: op-view.php:115
+#: admin/partials/op-partials.php:125
 msgid ""
 "<b> Warning: </b> The original images will be resized and overwritten, so it "
 "is always best to backup before running the script."
 msgstr ""
 
-#: op-view.php:170
+#: admin/partials/op-partials.php:180
 msgid ""
-"<b>Inside Tools > Optica press bulk image resizer </b> set the settings and "
-"you can start the bulk to resize all images"
+"<b>Inside Tools > Bulk image resizer </b> set the settings and you can start "
+"the bulk to resize all images"
 msgstr ""
 
-#: op-view.php:171
+#: admin/partials/op-partials.php:181
 msgid ""
 "Among the settings you can decide to allow the plugin to resize images when "
 "they are loaded."
 msgstr ""
 
-#: op-js-t9n.php:14
+#: includes/op-i18n.php:26
 msgid "Analyzing the update in progress ..."
 msgstr ""
 
-#: op-js-t9n.php:12
+#: includes/op-i18n.php:24
 msgid "Are you sure you want to leave the page?"
 msgstr ""
 
-#: op-js-t9n.php:11
+#: includes/op-i18n.php:23
 msgid "Are you sure you want to resize images with a height less than 500px?"
 msgstr ""
 
-#: op-js-t9n.php:10
+#: includes/op-i18n.php:22
 msgid "Are you sure you want to resize images with a width less than 500px?"
 msgstr ""
 
-#: op-view.php:112
+#: admin/partials/op-partials.php:19
+msgid "BULK IMAGE RESIZE"
+msgstr ""
+
+#: includes/op-loader-add-image-column.php:36
+msgid "Bulk image Resize"
+msgstr ""
+
+#: includes/op-loader-add-image-column.php:14
+#, php-format
+msgid "Bulk image resize: (%s)"
+msgstr ""
+
+#: admin/partials/op-partials.php:122
+msgid "BULK IMAGE RESIZER"
+msgstr ""
+
+#. Name of the plugin
+#: admin/op-admin.php:19
 msgid "Bulk image resizer"
 msgstr ""
 
-#: op-view.php:61
+#. Description of the plugin
+msgid "Bulk image resizer and upload resize"
+msgstr ""
+
+#: admin/partials/op-partials.php:71
 msgid "Compression Quality"
 msgstr ""
 
-#: op-view.php:55
+#: admin/partials/op-partials.php:65
 msgid "Dimensions"
 msgstr ""
 
-#: op-view.php:32
+#: admin/partials/op-partials.php:41
 msgid "DISTRIBUTION OF IMAGES"
 msgstr ""
 
-#: op-js-t9n.php:16
+#: includes/op-i18n.php:28
 msgid "Do not leave the page while you are resizing your images"
 msgstr ""
 
-#: op-js-t9n.php:23
+#: includes/op-i18n.php:35
 msgid "Estimated time analysis in progress."
 msgstr ""
 
-#: op-js-t9n.php:22
+#: includes/op-i18n.php:34
 #, php-format
 msgid "Estimated time remaining: %s"
 msgstr ""
 
-#: op-view.php:172
+#: admin/partials/op-partials.php:182
 msgid ""
 "Finally On <b> Media Library in list view </b> you have a new column that "
 "shows you the image data and the possibility to resize for groups of "
 "selected images."
 msgstr ""
 
-#: op-view.php:175
+#. Author of the plugin
+msgid "Giulio Pandolfelli"
+msgstr ""
+
+#: admin/partials/op-partials.php:185
 msgid "Go to the plugin"
 msgstr ""
 
-#: op-view.php:17
+#: admin/partials/op-partials.php:25
 msgid "HDD SPACE OCCUPIED"
 msgstr ""
 
-#: op-js-t9n.php:26
+#: includes/op-i18n.php:38
 msgid "I am having difficulty contacting the server."
 msgstr ""
 
-#: op-js-t9n.php:15
+#: includes/op-i18n.php:27
 msgid "I start resizing the images"
 msgstr ""
 
-#: op-view.php:73
+#: admin/partials/op-partials.php:83
 msgid "Max height"
 msgstr ""
 
-#: op-view.php:67
+#: admin/partials/op-partials.php:77
 msgid "Max width"
 msgstr ""
 
-#: op-js-t9n.php:25
+#: includes/op-i18n.php:37
 msgid "No images found to update"
 msgstr ""
 
-#: op-view.php:130
+#: admin/partials/op-partials.php:140
 msgid "Notifications"
 msgstr ""
 
-#: op-js-t9n.php:20
+#: includes/op-i18n.php:32
 #, php-format
 msgid "Now the used space is: <b>%s</b>"
 msgstr ""
 
-#: op-view.php:11
-msgid "OP BULK IMAGE RESIZE"
-msgstr ""
-
-#. Name of the plugin
-#: op-bulk-image-resizer.php:46
-msgid "Optica press bulk image resizer"
-msgstr ""
-
-#: op-hook-add-file-size-column.php:11
-#, php-format
-msgid "Optica resize: (%s)"
-msgstr ""
-
-#: op-view.php:123
+#: admin/partials/op-partials.php:133
 msgid "Pause"
 msgstr ""
 
-#: op-view.php:133
+#: admin/partials/op-partials.php:143
 msgid ""
 "Remember that you can optimize a group of images from media> library list "
-"view. Just select the images and resize them from group actions> op Resize "
+"view. Just select the images and resize them from group actions > Resize "
 "(widthXheight)"
 msgstr ""
 
-#: op-view.php:79
+#: admin/partials/op-partials.php:89
 msgid "Resize when images are loaded"
 msgstr ""
 
-#: op-view.php:122
+#: includes/op-loader.php:18
+#, php-format
+msgid "Resize: (%s)"
+msgstr ""
+
+#: admin/partials/op-partials.php:132
 msgid "Resume"
 msgstr ""
 
-#: op-view.php:138
+#: admin/partials/op-partials.php:148
 msgid "Resume the update"
 msgstr ""
 
-#: op-view.php:93
+#: admin/partials/op-partials.php:103
 msgid "Save your changes"
 msgstr ""
 
-#: op-view.php:21
+#: admin/partials/op-partials.php:30
 msgid "Saved images:"
 msgstr ""
 
-#: op-view.php:52
+#: admin/partials/op-partials.php:62
 msgid "SETTINGS"
 msgstr ""
 
-#: op-view.php:20
+#: admin/partials/op-partials.php:29
 msgid "Space occupied by images:"
 msgstr ""
 
-#: op-view.php:119
+#: admin/partials/op-partials.php:129
 msgid "Start the resize"
 msgstr ""
 
-#: op-js-t9n.php:24
+#: includes/op-i18n.php:36
 #, php-format
 msgid "Still to be processed: %s"
 msgstr ""
 
-#: op-view.php:164
-msgid "Thank you for downloading OPTICA IMAGE resize bulk"
+#: admin/partials/op-partials.php:174
+msgid "Thank you for downloading Bulk image resize"
 msgstr ""
 
-#: op-js-t9n.php:21
+#: includes/op-i18n.php:33
 #, php-format
 msgid "The elapsed time is: %s"
 msgstr ""
 
-#: op-view.php:167
+#: admin/partials/op-partials.php:177
 msgid ""
 "The plugin is opensource and without additional paid plans. Using this "
 "plugin you have three features:"
 msgstr ""
 
-#: op-js-t9n.php:19
+#: includes/op-i18n.php:31
 msgid "The update has finished"
 msgstr ""
 
-#: op-js-t9n.php:18
+#: includes/op-i18n.php:30
 #, php-format
 msgid "They were spared: <b> %s </b>."
 msgstr ""
 
-#: op-js-t9n.php:9
+#: includes/op-i18n.php:21
 msgid "Updates are paused. Click on resume to continue."
 msgstr ""
 
-#: op-js-t9n.php:13
+#: includes/op-i18n.php:25
 msgid "Wait for the end of saving the settings"
 msgstr ""
 
-#: op-js-t9n.php:17
+#: includes/op-i18n.php:29
 msgid "We are almost there"
 msgstr ""
 
-#: op-view.php:137
+#: admin/partials/op-partials.php:147
 #, php-format
 msgid "We found %s images to update out of %s total"
 msgstr ""

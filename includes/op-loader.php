@@ -15,7 +15,7 @@
  ****************************************************/
 add_filter('bulk_actions-upload', function ($bulk_actions) {
 	list($width, $height, $quality) = op_get_resize_options();
-	$bulk_actions['gp-resize-original-images'] = sprintf(__('Optica resize: (%s)', 'op-bir'), $width . "x" . $height);
+	$bulk_actions['gp-resize-original-images'] = sprintf(__('Resize: (%s)', 'op-bir'), $width . "x" . $height);
 	return $bulk_actions;
 });
 

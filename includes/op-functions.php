@@ -1,4 +1,5 @@
 <?php 
+namespace opBulkImageResizer\Includes\OpFunctions;
 /**
  * Tutte le funzioni che servono per gestire il plugin
  * 
@@ -30,7 +31,7 @@ function html_select_dimension($val) {
             } else {
                 $selected = "";
             }
-            ?><option value="<?php echo $key; ?>"<?php echo $selected; ?>><?php echo $label; ?></option><?php
+            ?><option value="<?php echo esc_attr($key); ?>"<?php echo esc_attr($selected); ?>><?php echo esc_html($label); ?></option><?php
         }
     ?>
     </select>
@@ -49,7 +50,7 @@ function html_select_quality($val) {
     <?php
         foreach ($dim as $key=>$label) {
             $selected = ($key == $val) ? ' selected="selected"' : ""; 
-            ?><option value="<?php echo $key; ?>"<?php echo $selected; ?>><?php echo $label; ?></option><?php
+            ?><option value="<?php echo esc_attr($key); ?>"<?php echo esc_attr($selected); ?>><?php echo esc_html($label); ?></option><?php
         }
     ?>
     </select>
@@ -75,7 +76,11 @@ function get_total_img() {
 function op_optimize_single_img($attachment_id)
 {
     list($width, $height, $quality) = op_get_resize_options();
-    $path_img = wp_get_original_image_path($attachment_id);
+   
+   // TODO: qualche volta  wp_get_original_image_path($attachment_id); 
+   // get_attached_file invece ritorna l'immagine lavorata!
+   // IN una versione futura si puà far scegliere se ridimensionare l'originale o una copia
+    $path_img = get_attached_file($attachment_id);
     if (file_is_valid_image($path_img)) {
         $resize = true;
         /**
@@ -119,25 +124,32 @@ function op_optimize_single_img($attachment_id)
             return $img;
         }
     } else {
-        return new WP_Error('invalid_image');
+        return new \WP_Error('invalid_image');
     }
 }
 
 /**
  * Ogni volta che vengono ricaricate le statistiche viene salvato un nuovo punto. Questa funzione cancella quelli vecchi.
  * @param Array $jstat ['timestamp'=>bytes, ] è il jstat['data_bar']
+ * @return Array
  */
 function op_clean_space_chart($jstat)
 {
-    $old = (new DateTime())->modify("-1 day");
-    $tooold = (new DateTime())->modify("-30 days");
+    $old    =  new \DateTime();
+    $old->modify("-1 day");
+
+    $tooold = new \DateTime();
+    $tooold->modify("-30 days");
+ 
     $jstatnew = array();
     // inverto l'array perché non memorizzo tutti i valori e preferisco avere gli ultimi e non i primi.
-
+ 
     $jstat = array_reverse($jstat, true);
     $adding_dates = array();
+
+ 
     foreach ($jstat as $jk => $v) {
-        $key_date = (new DateTime())->setTimestamp($jk);
+        $key_date = (new \DateTime())->setTimestamp($jk);
         if ($key_date == false || $jk == 0) continue;
         $string_date = $key_date->format('YmdHis');
         if ($key_date < $tooold) {
@@ -179,6 +191,7 @@ function op_convert_space_to_graph($data_size) {
 
 
 /**
+ * NON LO USO!
  * C'è differenza tra come vengono salvati i dati e come vengono rappresentati.
  * Questa funzione converte i dati ricavati con quelli da visualizzare
  * @param Array $data I dati che si ricevono. $data[$key] è  [label:value, label:value] 
@@ -187,8 +200,7 @@ function op_convert_space_to_graph($data_size) {
  * @param String $key Serve a definire la gestione dei colori data_pie|data_bar
  * @return Array  esempio ['labels'=>['a','b'], 'datasets'=> [['data'=> [10,20],'backgroundColor'=> ['rgb(255,99,132)','rgb(54,162,235)']]]];
  */
-function convert_data_option_to_graph($data, $key)
-{
+function convert_data_option_to_graph($data, $key) {
     $label_bar = array();
     $data_values = array();
     if ($key == "data_pie") {
@@ -207,7 +219,7 @@ function convert_data_option_to_graph($data, $key)
         // dvalue sono i bytes occupati
         // BUG: faccio substr di un TIMESTAMP!
         foreach ($data[$key] as $dkey => $dvalue) {
-            $time_key = (new DateTime())->setTimestamp($dkey)->format('m-d');
+            $time_key = (new \DateTime())->setTimestamp($dkey)->format('m-d');
             if (!isset($time_bar[$time_key])) {
                 $time_bar[$time_key] = 0;
             }
@@ -222,7 +234,7 @@ function convert_data_option_to_graph($data, $key)
             if ($dvalue != end($data_values)) {
                 $temp_count_foreach++;
                 if ($temp_count_foreach > 10) break;
-                $time_key = (new DateTime())->setTimestamp($dkey);
+                $time_key = (new \DateTime())->setTimestamp($dkey);
                 $time = $time_key->format('m-d');
                 if (array_key_exists($time, $time_bar) && $time_bar[$time] > 1) {
                     $label_bar[] = $time_key->format('m-d H:i');
@@ -253,8 +265,7 @@ function convert_data_option_to_graph($data, $key)
  * @return Array [$tot_imgages, $images_file_size, $datasets] 
  * $datasets =  ['label' => [], 'data' => [],  'backgroundColor' => '']
  */
-function prepare_images_stat()
-{
+function prepare_images_stat() {
     global $wpdb;
     $images_file_size = 0;
     $tot_img = $wpdb->get_results("SELECT ID, post_mime_type, post_title FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\")  AND post_type = \"attachment\" ");
@@ -267,7 +278,7 @@ function prepare_images_stat()
             $attacment_meta[$am->post_id] = ['width' => $temp['width'], 'height' => $temp['height'], 'file' => $temp['file'], 'filesize' => filesize($upload_dir['basedir'] . "/" . $temp['file'])];
         }
     }
-   
+
     unset($temp_attacment_meta);
     $array_unique = array();
     $chart_scatter = [];
@@ -307,6 +318,7 @@ function prepare_images_stat()
     foreach ($chart_scatter as $key => $value) {
         $chart_scatter[$key] = array_values($value);
     }
+        
     $color_array = array('jpeg' => '#36a2eb', 'jpg' => '#36a2eb', 'tiff' => '#ff6384', 'png' => '#ff6384', 'gif' => '#ff6384', 'bmp' => '#ff6384', 'webp' => '#2e9460');
 
     $datasets = [];
@@ -319,6 +331,7 @@ function prepare_images_stat()
         }
         $datasets[] = ['label' => $key, 'data' => $value,  'backgroundColor' => $color];
     }
+
     return [count($tot_img), $images_file_size, $datasets];
 }
 
@@ -327,11 +340,9 @@ function prepare_images_stat()
  * list($width,$height,$quality) = gp_get_resize_options();
  * @return Array [width,height,quality]
  */
-function op_get_resize_options()
-{
+function op_get_resize_options() {
     $width = (int)get_option('op_resize_max_width', '1920');
     $height = (int)get_option('op_resize_max_height', '1080');
     $quality = (int)get_option('op_resize_quality', '75');
     return array($width, $height, $quality);
 }
-

@@ -12,7 +12,7 @@
  * Plugin Name:       Bulk image resizer
  * Plugin URI:        https://github.com/giuliopanda/op-bulk-image-resizer
  * Description:       Optimize images uploaded to the server. Go to "tools" to configure the plugin or to perform batch optimization. Go to "Media library (list view)" to optimize individual images.
- * Version:           1.0.1
+ * Version:           1.1.0
  * Requires at least: 5.3
  * Requires PHP:      5.6
  * Author:            Giulio Pandolfelli
@@ -22,26 +22,32 @@
  * Domain Path: 	  /languages
  */
 
-
 if (!defined('WPINC')) die;
+define('OP-BULK-IMAGE-RESIZER_VERSION', '1.1.0');
+
 require_once(plugin_dir_path( __FILE__ ) . "includes/op-functions.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/op-loader.php");
-if (!is_admin()) return;
-/**
- * Currently plugin version. https://semver.org
- */
-define('OP-BULK-IMAGE-RESIZER_VERSION', '0.9.0');
-
-// verifico se si sta caricando la pagina del plugin o altre pagine del sito
-$op_plugin_basename = str_replace(".php", "", basename(__FILE__));
-$op_execute_plugin = (isset($_REQUEST['page']) && @$_REQUEST['page'] == $op_plugin_basename);
-
-require_once(plugin_dir_path( __FILE__ ) . "op-activation.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/op-loader-ajax.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/op-i18n.php");
-require_once(plugin_dir_path( __FILE__ ) . "admin/partials/op-partials.php");
-require_once(plugin_dir_path( __FILE__ ) . "admin/op-admin.php");
-
+require_once(plugin_dir_path( __FILE__ ) . "includes/class-bulk-image-resizer-loader.php");
+$bulk_image_resizer_ajax_loader = new Bulk_image_resizer_loader();
 // Chiamo la funzione op_activate quando il plugin viene attivato
-//register_activation_hook(__FILE__, 'op_activate');
-register_uninstall_hook(__FILE__, 'op_uninstall');
+
+register_uninstall_hook(__FILE__, [$bulk_image_resizer_ajax_loader, 'uninstall']);
+register_activation_hook( __FILE__,  [$bulk_image_resizer_ajax_loader, 'activate'] );
+
+if (!is_admin()) return;
+require_once(plugin_dir_path( __FILE__ ) . "admin/class-bulk-image-resiers-admin.php");
+require_once(plugin_dir_path( __FILE__ ) . "includes/class-bulk-image-resizer-loader-ajax.php");
+// Carico i file della lingua
+load_plugin_textdomain('op-bir', false, plugin_dir_path( __FILE__ ) . 'languages');
+
+$bulk_image_resizer_ajax = new Bulk_image_resizer_loader_ajax();
+$admin = new Bulk_image_resizer_admin();
+
+/**
+ * Activation
+ */
+
+
+
+/**
+ * Aggiunge una option per segnalare che il plugin è stato appena attivato.
+ */

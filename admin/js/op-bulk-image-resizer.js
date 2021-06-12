@@ -62,6 +62,9 @@ jQuery(document).ready(function () {
      * SALVO I DATI QUANDO SI FA SUBMIT
      */ 
     jQuery('#opSubmitSetting').click(function() {  
+        if (jQuery('#opContainer').hasClass('js-state-resize-processing')) {
+            return false;
+        }
         let max_width = parseInt(jQuery('#resizeMaxWidth').val());
         conf_width_yes = true;
         if (max_width < 500) {

@@ -20,7 +20,7 @@ class Bulk_image_resizer_admin
 	 */
 	public function opbir_add_admin_menu() {
 		$menu_id = add_management_page(
-			__('Bulk image resizer', 'op-bir'),
+			__('Bulk image resizer', 'op-bulk-image-resizer'),
 			'Bulk image resizer',
 			'manage_options',
 			'op-bulk-image-resizer',

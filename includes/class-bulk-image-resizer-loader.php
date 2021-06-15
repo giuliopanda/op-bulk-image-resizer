@@ -45,7 +45,7 @@ class Bulk_image_resizer_loader {
 	 */
 	public function bulk_action_upload ($bulk_actions) {
 		list($width, $height, $quality) = Opfn\op_get_resize_options();
-		$bulk_actions['op-resize-original-images'] = sprintf(__('Resize: (%s)', 'op-bir'), $width . "x" . $height);
+		$bulk_actions['op-resize-original-images'] = sprintf(__('Resize: (%s)', 'op-bulk-image-resizer'), $width . "x" . $height);
 		return $bulk_actions;
 	}
 
@@ -164,7 +164,7 @@ class Bulk_image_resizer_loader {
 		} else {
 			echo 'Do you want to resize too large images during upload?';
 		}
-		echo ' <a href="'.admin_url('admin.php?page=op-bulk-image-resizer').'" >'.__('go to Bulk image resizer', 'op-bir').'</a></p>';
+		echo ' <a href="'.admin_url('admin.php?page=op-bulk-image-resizer').'" >'.__('go to Bulk image resizer', 'op-bulk-image-resizer').'</a></p>';
 	}
 
 	/*********************************************************************
@@ -273,24 +273,24 @@ class Bulk_image_resizer_loader {
 	public function transalte_javascript() {
 		?>
 			<script>
-				var t9n_pause = "<?php (_e("Updates are paused. Click on resume to continue.", "op-bir")); ?>";
-				var t9n_confirm_1 = "<?php echo (__("Are you sure you want to resize images with a width less than 500px?", "op-bir")); ?>";
-				var t9n_confirm_2 = "<?php echo (__("Are you sure you want to resize images with a height less than 500px?", "op-bir")); ?>";
-				var t9n_confirm_3 = "<?php echo (__("Are you sure you want to leave the page?", "op-bir")); ?>";
-				var t9n_wait_settings = "<?php echo (__("Wait for the end of saving the settings", "op-bir")); ?>";
-				var t9n_analisys = "<?php echo (__("Analyzing the update in progress ...", "op-bir")); ?>";
-				var t9n_start_resize = "<?php echo (__("I start resizing the images", "op-bir")); ?>";
-				var t9n_warning_resize = "<?php echo (__("Do not leave the page while you are resizing your images", "op-bir")); ?>";
-				var t9n_we_are_almost_there = "<?php echo (__("We are almost there", "op-bir")); ?>";
-				var t9n_spared = "<?php echo (__("They were spared: <b> %s </b>.", "op-bir")); ?>";
-				var t9n_end_1 = "<?php echo (__("The update has finished", "op-bir")); ?>";
-				var t9n_end_2 = "<?php echo (__("Now the used space is: <b>%s</b>", "op-bir")); ?>";
-				var t9n_end_3 = "<?php echo (__("The elapsed time is: %s", "op-bir")); ?>";
-				var t9n_time_remaining = "<?php echo (__("Estimated time remaining: %s", "op-bir")); ?>";
-				var t9n_time_analisys = "<?php echo (__("Estimated time analysis in progress.", "op-bir")); ?>";
-				var t9n_img_left = "<?php echo (__("Still to be processed: %s", "op-bir")); ?>";
-				var t9n_none = "<?php echo (__("No images found to update", "op-bir")); ?>";
-				var t9n_ops = "<?php echo (__("I am having difficulty contacting the server.", "op-bir")); ?>";
+				var t9n_pause = "<?php (_e("Updates are paused. Click on resume to continue.", "op-bulk-image-resizer")); ?>";
+				var t9n_confirm_1 = "<?php echo (__("Are you sure you want to resize images with a width less than 500px?", "op-bulk-image-resizer")); ?>";
+				var t9n_confirm_2 = "<?php echo (__("Are you sure you want to resize images with a height less than 500px?", "op-bulk-image-resizer")); ?>";
+				var t9n_confirm_3 = "<?php echo (__("Are you sure you want to leave the page?", "op-bulk-image-resizer")); ?>";
+				var t9n_wait_settings = "<?php echo (__("Wait for the end of saving the settings", "op-bulk-image-resizer")); ?>";
+				var t9n_analisys = "<?php echo (__("Analyzing the update in progress ...", "op-bulk-image-resizer")); ?>";
+				var t9n_start_resize = "<?php echo (__("I start resizing the images", "op-bulk-image-resizer")); ?>";
+				var t9n_warning_resize = "<?php echo (__("Do not leave the page while you are resizing your images", "op-bulk-image-resizer")); ?>";
+				var t9n_we_are_almost_there = "<?php echo (__("We are almost there", "op-bulk-image-resizer")); ?>";
+				var t9n_spared = "<?php echo (__("They were spared: <b> %s </b>.", "op-bulk-image-resizer")); ?>";
+				var t9n_end_1 = "<?php echo (__("The update has finished", "op-bulk-image-resizer")); ?>";
+				var t9n_end_2 = "<?php echo (__("Now the used space is: <b>%s</b>", "op-bulk-image-resizer")); ?>";
+				var t9n_end_3 = "<?php echo (__("The elapsed time is: %s", "op-bulk-image-resizer")); ?>";
+				var t9n_time_remaining = "<?php echo (__("Estimated time remaining: %s", "op-bulk-image-resizer")); ?>";
+				var t9n_time_analisys = "<?php echo (__("Estimated time analysis in progress.", "op-bulk-image-resizer")); ?>";
+				var t9n_img_left = "<?php echo (__("Still to be processed: %s", "op-bulk-image-resizer")); ?>";
+				var t9n_none = "<?php echo (__("No images found to update", "op-bulk-image-resizer")); ?>";
+				var t9n_ops = "<?php echo (__("I am having difficulty contacting the server.", "op-bulk-image-resizer")); ?>";
 				function t9n_sprintf(string) {
 					var args = Array.prototype.slice.call(arguments);
 					a = args.splice(0,1);

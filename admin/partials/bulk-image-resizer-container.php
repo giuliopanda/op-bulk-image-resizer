@@ -13,18 +13,18 @@ if (!defined('WPINC')) die;
 ?>
 <div class="wrap">
     <div id="opContainer" class="op-container">
-        <h1 class="wp-heading-inline"><?php _e('BULK IMAGE RESIZE', 'op-bir'); ?></h1>
+        <h1 class="wp-heading-inline"><?php _e('BULK IMAGE RESIZE', 'op-bulk-image-resizer'); ?></h1>
         <div class="op-grid-2-col op-first-grid">
             <div class="op-block">
                 <?php require(dirname(__FILE__)."/bulk-image-resizer-block-setup.php"); ?>
             </div>
             <div class="op-block">
-                <div class="op-form-title "><?php _e('HDD SPACE OCCUPIED', 'op-bir'); ?></div>
+                <div class="op-form-title "><?php _e('HDD SPACE OCCUPIED', 'op-bulk-image-resizer'); ?></div>
                 <div class="spinner js-op-spin-preload" style="visibility:inherit;float:initial"></div>
                 <div class="op-info-box js-op-spin-loaded" style="display:none">
                     <ul>
-                        <li><?php _e('Space occupied by images:', 'op-bir'); ?> <span id="statDiskSpaceImg">-</span></li>
-                        <li><?php _e('Saved images:', 'op-bir'); ?> <span id="staIimages">-</span></li>
+                        <li><?php _e('Space occupied by images:', 'op-bulk-image-resizer'); ?> <span id="statDiskSpaceImg">-</span></li>
+                        <li><?php _e('Saved images:', 'op-bulk-image-resizer'); ?> <span id="staIimages">-</span></li>
                         <div class="op-chart-pie">
                             <canvas id="chart_space_disk"></canvas>
                         </div>
@@ -35,7 +35,7 @@ if (!defined('WPINC')) die;
                 <?php require(dirname(__FILE__)."/bulk-image-resizer-block-bulk.php"); ?>
             </div>
             <div class="op-block">
-                <div class="op-form-title"><?php _e('DISTRIBUTION OF IMAGES', 'op-bir'); ?></div>
+                <div class="op-form-title"><?php _e('DISTRIBUTION OF IMAGES', 'op-bulk-image-resizer'); ?></div>
                 <div class="spinner js-op-spin-preload" style="visibility:inherit;float:initial"></div>
                 <div class="grid-second-row-chart js-op-spin-loaded"  style="display:none">
                     <div class="op-chart-pie">

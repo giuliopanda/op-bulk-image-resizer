@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Optica Press: bulk image resizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-04 07:11+0000\n"
+"POT-Creation-Date: 2021-06-15 16:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: GIULIO PANDOLFELLI GIULIOPANDA@GMAIL.COM\n"
 "Language-Team: \n"
@@ -14,94 +14,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.5.2; wp-5.7.2\n"
-"X-Domain: op-bir"
+"X-Domain: op-bulk-image-resizer"
 
-#: admin/partials/op-partials.php:125
+#: admin/partials/bulk-image-resizer-block-bulk.php:20
 msgid ""
 "<b> Warning: </b> The original images will be resized and overwritten, so it "
 "is always best to backup before running the script."
 msgstr ""
 
-#: admin/partials/op-partials.php:180
+#: admin/partials/bulk-image-resizer-popup-activation-plugin.php:24
 msgid ""
 "<b>Inside Tools > Bulk image resizer </b> set the settings and you can start "
 "the bulk to resize all images"
 msgstr ""
 
-#: admin/partials/op-partials.php:181
+#: admin/partials/bulk-image-resizer-popup-activation-plugin.php:25
 msgid ""
 "Among the settings you can decide to allow the plugin to resize images when "
 "they are loaded."
 msgstr ""
 
-#: includes/op-i18n.php:26
+#: includes/class-bulk-image-resizer-loader.php:281
 msgid "Analyzing the update in progress ..."
 msgstr ""
 
-#: includes/op-i18n.php:24
+#: includes/class-bulk-image-resizer-loader.php:279
 msgid "Are you sure you want to leave the page?"
 msgstr ""
 
-#: includes/op-i18n.php:23
+#: includes/class-bulk-image-resizer-loader.php:278
 msgid "Are you sure you want to resize images with a height less than 500px?"
 msgstr ""
 
-#: includes/op-i18n.php:22
+#: includes/class-bulk-image-resizer-loader.php:277
 msgid "Are you sure you want to resize images with a width less than 500px?"
 msgstr ""
 
-#: admin/partials/op-partials.php:19
+#: admin/partials/bulk-image-resizer-container.php:16
 msgid "BULK IMAGE RESIZE"
 msgstr ""
 
-#: includes/op-loader-add-image-column.php:36
-msgid "Bulk image Resize"
-msgstr ""
-
-#: includes/op-loader-add-image-column.php:14
-#, php-format
-msgid "Bulk image resize: (%s)"
-msgstr ""
-
-#: admin/partials/op-partials.php:122
+#: admin/partials/bulk-image-resizer-block-bulk.php:17
 msgid "BULK IMAGE RESIZER"
 msgstr ""
 
-#. Name of the plugin
-#: admin/op-admin.php:19
+#: admin/bulk-image-resizer-admin.php:23
+#: admin/class-bulk-image-resiers-admin.php:23
 msgid "Bulk image resizer"
 msgstr ""
 
-#. Description of the plugin
-msgid "Bulk image resizer and upload resize"
-msgstr ""
-
-#: admin/partials/op-partials.php:71
+#: admin/partials/bulk-image-resizer-block-setup.php:22
 msgid "Compression Quality"
 msgstr ""
 
-#: admin/partials/op-partials.php:65
+#: admin/partials/bulk-image-resizer-block-setup.php:16
 msgid "Dimensions"
 msgstr ""
 
-#: admin/partials/op-partials.php:41
+#: admin/partials/bulk-image-resizer-container.php:38
 msgid "DISTRIBUTION OF IMAGES"
 msgstr ""
 
-#: includes/op-i18n.php:28
+#: includes/class-bulk-image-resizer-loader.php:283
 msgid "Do not leave the page while you are resizing your images"
 msgstr ""
 
-#: includes/op-i18n.php:35
+#: includes/class-bulk-image-resizer-loader.php:290
 msgid "Estimated time analysis in progress."
 msgstr ""
 
-#: includes/op-i18n.php:34
+#: includes/class-bulk-image-resizer-loader.php:289
 #, php-format
 msgid "Estimated time remaining: %s"
 msgstr ""
 
-#: admin/partials/op-partials.php:182
+#: admin/partials/bulk-image-resizer-popup-activation-plugin.php:26
 msgid ""
 "Finally On <b> Media Library in list view </b> you have a new column that "
 "shows you the image data and the possibility to resize for groups of "
@@ -112,133 +99,156 @@ msgstr ""
 msgid "Giulio Pandolfelli"
 msgstr ""
 
-#: admin/partials/op-partials.php:185
+#: includes/class-bulk-image-resizer-loader.php:167
+msgid "go to Bulk image resizer"
+msgstr ""
+
+#: admin/partials/bulk-image-resizer-popup-activation-plugin.php:29
 msgid "Go to the plugin"
 msgstr ""
 
-#: admin/partials/op-partials.php:25
+#: admin/partials/bulk-image-resizer-container.php:22
 msgid "HDD SPACE OCCUPIED"
 msgstr ""
 
-#: includes/op-i18n.php:38
+#: includes/class-bulk-image-resizer-loader-ajax.php:51
+msgid "Height and width must be greater than 400px"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/giuliopanda/op-bulk-image-resizer"
+msgstr ""
+
+#: includes/class-bulk-image-resizer-loader.php:293
 msgid "I am having difficulty contacting the server."
 msgstr ""
 
-#: includes/op-i18n.php:27
+#: includes/class-bulk-image-resizer-loader.php:282
 msgid "I start resizing the images"
 msgstr ""
 
-#: admin/partials/op-partials.php:83
+#: admin/partials/bulk-image-resizer-block-setup.php:34
 msgid "Max height"
 msgstr ""
 
-#: admin/partials/op-partials.php:77
+#: admin/partials/bulk-image-resizer-block-setup.php:28
 msgid "Max width"
 msgstr ""
 
-#: includes/op-i18n.php:37
+#: includes/class-bulk-image-resizer-loader.php:292
 msgid "No images found to update"
 msgstr ""
 
-#: admin/partials/op-partials.php:140
+#: admin/partials/bulk-image-resizer-block-bulk.php:35
 msgid "Notifications"
 msgstr ""
 
-#: includes/op-i18n.php:32
+#: includes/class-bulk-image-resizer-loader.php:287
 #, php-format
 msgid "Now the used space is: <b>%s</b>"
 msgstr ""
 
-#: admin/partials/op-partials.php:133
+#. Name of the plugin
+msgid "Op Bulk image resizer"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Optimize images uploaded to the server. Go to \"tools\" to configure the "
+"plugin or to perform batch optimization. Go to \"Media library (list view)\" "
+"to optimize individual images."
+msgstr ""
+
+#: admin/partials/bulk-image-resizer-block-bulk.php:28
 msgid "Pause"
 msgstr ""
 
-#: admin/partials/op-partials.php:143
+#: admin/partials/bulk-image-resizer-block-bulk.php:38
 msgid ""
 "Remember that you can optimize a group of images from media> library list "
 "view. Just select the images and resize them from group actions > Resize "
 "(widthXheight)"
 msgstr ""
 
-#: admin/partials/op-partials.php:89
+#: admin/partials/bulk-image-resizer-block-setup.php:40
 msgid "Resize when images are loaded"
 msgstr ""
 
-#: includes/op-loader.php:18
+#: includes/class-bulk-image-resizer-loader.php:48
 #, php-format
 msgid "Resize: (%s)"
 msgstr ""
 
-#: admin/partials/op-partials.php:132
+#: admin/partials/bulk-image-resizer-block-bulk.php:27
 msgid "Resume"
 msgstr ""
 
-#: admin/partials/op-partials.php:148
+#: admin/partials/bulk-image-resizer-block-bulk.php:43
 msgid "Resume the update"
 msgstr ""
 
-#: admin/partials/op-partials.php:103
+#: admin/partials/bulk-image-resizer-block-setup.php:53
 msgid "Save your changes"
 msgstr ""
 
-#: admin/partials/op-partials.php:30
+#: admin/partials/bulk-image-resizer-container.php:27
 msgid "Saved images:"
 msgstr ""
 
-#: admin/partials/op-partials.php:62
+#: admin/partials/bulk-image-resizer-block-setup.php:13
 msgid "SETTINGS"
 msgstr ""
 
-#: admin/partials/op-partials.php:29
+#: admin/partials/bulk-image-resizer-container.php:26
 msgid "Space occupied by images:"
 msgstr ""
 
-#: admin/partials/op-partials.php:129
+#: admin/partials/bulk-image-resizer-block-bulk.php:24
 msgid "Start the resize"
 msgstr ""
 
-#: includes/op-i18n.php:36
+#: includes/class-bulk-image-resizer-loader.php:291
 #, php-format
 msgid "Still to be processed: %s"
 msgstr ""
 
-#: admin/partials/op-partials.php:174
+#: admin/partials/bulk-image-resizer-popup-activation-plugin.php:18
 msgid "Thank you for downloading Bulk image resize"
 msgstr ""
 
-#: includes/op-i18n.php:33
+#: includes/class-bulk-image-resizer-loader.php:288
 #, php-format
 msgid "The elapsed time is: %s"
 msgstr ""
 
-#: admin/partials/op-partials.php:177
+#: admin/partials/bulk-image-resizer-popup-activation-plugin.php:21
 msgid ""
 "The plugin is opensource and without additional paid plans. Using this "
 "plugin you have three features:"
 msgstr ""
 
-#: includes/op-i18n.php:31
+#: includes/class-bulk-image-resizer-loader.php:286
 msgid "The update has finished"
 msgstr ""
 
-#: includes/op-i18n.php:30
+#: includes/class-bulk-image-resizer-loader.php:285
 #, php-format
 msgid "They were spared: <b> %s </b>."
 msgstr ""
 
-#: includes/op-i18n.php:21
+#: includes/class-bulk-image-resizer-loader.php:276
 msgid "Updates are paused. Click on resume to continue."
 msgstr ""
 
-#: includes/op-i18n.php:25
+#: includes/class-bulk-image-resizer-loader.php:280
 msgid "Wait for the end of saving the settings"
 msgstr ""
 
-#: includes/op-i18n.php:29
+#: includes/class-bulk-image-resizer-loader.php:284
 msgid "We are almost there"
 msgstr ""
 
-#: admin/partials/op-partials.php:147
+#: admin/partials/bulk-image-resizer-block-bulk.php:42
 #, php-format
 msgid "We found %s images to update out of %s total"
 msgstr ""

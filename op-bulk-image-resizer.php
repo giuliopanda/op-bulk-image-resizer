@@ -9,7 +9,7 @@
  * @package           op-bulk-image-resizer
  *
  * @wordpress-plugin
- * Plugin Name:       Bulk image resizer
+ * Plugin Name:       Op Bulk image resizer
  * Plugin URI:        https://github.com/giuliopanda/op-bulk-image-resizer
  * Description:       Optimize images uploaded to the server. Go to "tools" to configure the plugin or to perform batch optimization. Go to "Media library (list view)" to optimize individual images.
  * Version:           1.1.0
@@ -18,7 +18,7 @@
  * Author:            Giulio Pandolfelli
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: 	  op-bir
+ * Text Domain: 	  op-bulk-image-resizer
  * Domain Path: 	  /languages
  */
 
@@ -37,7 +37,7 @@ if (!is_admin()) return;
 require_once(plugin_dir_path( __FILE__ ) . "admin/class-bulk-image-resiers-admin.php");
 require_once(plugin_dir_path( __FILE__ ) . "includes/class-bulk-image-resizer-loader-ajax.php");
 // Carico i file della lingua
-load_plugin_textdomain('op-bir', false, plugin_dir_path( __FILE__ ) . 'languages');
+load_plugin_textdomain('op-bulk-image-resizer', false, plugin_dir_path( __FILE__ ) . 'languages');
 
 $bulk_image_resizer_ajax = new Bulk_image_resizer_loader_ajax();
 $admin = new Bulk_image_resizer_admin();

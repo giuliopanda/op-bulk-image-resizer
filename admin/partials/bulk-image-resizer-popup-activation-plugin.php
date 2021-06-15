@@ -15,18 +15,18 @@ if (!defined('WPINC')) die;
         <div class="notice notice-info is-dismissible">
             <div class="op-row-notice">
                 <div class="op-row-notice-half">
-                    <h4 class="op-notice-half"><?php _e('Thank you for downloading Bulk image resize', 'op-bir'); ?></h4>
+                    <h4 class="op-notice-half"><?php _e('Thank you for downloading Bulk image resize', 'op-bulk-image-resizer'); ?></h4>
                 </div>
                 <div class="op-info-box">
-                    <p><?php _e("The plugin is opensource and without additional paid plans. Using this plugin you have three features:", 'op-bir'); ?>
+                    <p><?php _e("The plugin is opensource and without additional paid plans. Using this plugin you have three features:", 'op-bulk-image-resizer'); ?>
                     </p>
                     <ul class="ul-disc">
-                        <li><?php _e("<b>Inside Tools > Bulk image resizer </b> set the settings and you can start the bulk to resize all images", 'op-bir'); ?></li>
-                        <li><?php _e("Among the settings you can decide to allow the plugin to resize images when they are loaded.", 'op-bir'); ?></li>
-                        <li><?php _e("Finally On <b> Media Library in list view </b> you have a new column that shows you the image data and the possibility to resize for groups of selected images.", 'op-bir'); ?></li>
+                        <li><?php _e("<b>Inside Tools > Bulk image resizer </b> set the settings and you can start the bulk to resize all images", 'op-bulk-image-resizer'); ?></li>
+                        <li><?php _e("Among the settings you can decide to allow the plugin to resize images when they are loaded.", 'op-bulk-image-resizer'); ?></li>
+                        <li><?php _e("Finally On <b> Media Library in list view </b> you have a new column that shows you the image data and the possibility to resize for groups of selected images.", 'op-bulk-image-resizer'); ?></li>
                     </ul>
                     <br>
-                    <a href="<?php echo admin_url('admin.php?page=op-bulk-image-resizer'); ?>" class="button button-primary"><?php _e('Go to the plugin', 'op-bir'); ?></a>
+                    <a href="<?php echo admin_url('admin.php?page=op-bulk-image-resizer'); ?>" class="button button-primary"><?php _e('Go to the plugin', 'op-bulk-image-resizer'); ?></a>
                     <br><br>
                 </div>
             </div>

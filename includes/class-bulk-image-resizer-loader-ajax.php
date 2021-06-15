@@ -48,7 +48,7 @@ class Bulk_image_resizer_loader_ajax {
 			update_option('op_resize_quality', $quality, false);	
 			update_option('op_resize_on_upload', $resize, false);		
 		} else {
-			$result = ['updated' =>0, 'msg'=>__('Height and width must be greater than 400px','op-bir')];
+			$result = ['updated' =>0, 'msg'=>__('Height and width must be greater than 400px','op-bulk-image-resizer')];
 		}
 		wp_send_json($result);
 	}

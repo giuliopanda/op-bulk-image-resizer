@@ -117,5 +117,5 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 
 == Credits ==
 The Bulk image resize was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
-for graphs I use https://www.chartjs.org/ per i grafici.
+for graphs I use https://www.chartjs.org/
 for translation I use Loco Translate 

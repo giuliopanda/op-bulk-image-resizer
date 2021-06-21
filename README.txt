@@ -1,15 +1,15 @@
 === Bulk image resizer ===
 Contributors: giuliopanda 
-Donate link: giuliopanda@gmail.com
-Tags: convert,image,Optimize,resize
+Donate link: https://www.paypal.com/donate/?cmd=_donations&business=giuliopanda%40gmail.com&item_name=wordpress+plugin+Bulk+image+resizer
+Tags: convert,image,optimize,resize,attachment,photo
 Requires at least: 5.3
 Tested up to: 5.7.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 
-Bulk image resizer.
+You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
 
 == Description ==
 
@@ -24,7 +24,7 @@ Bulk image resize allows you to optimize images uploaded to wordpress.
 - Through graphics it allows you to monitor the status of the images on the server
 - Ability to use specific hooks to customize optimization options.
 
- The GitHub repo can be found at [https://github.com/giuliopanda/op-bulk-image-resizer](https://github.com/giuliopanda/op-bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
+ The GitHub repo can be found at [https://github.com/giuliopanda/bulk-image-resizer](https://github.com/giuliopanda/bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
 == Installation ==
 
@@ -36,10 +36,13 @@ You can resize single images or groups from media library (mode list).
 = Why use Bulk image resizer? =
 Because it is opensource and you have no limits in use. It will allow you to make your site faster and will save you space. 
 
-= What formats does it support? =
-It supports jpg and png formats in accordance with wordpress directives. In fact by default you can only upload JPG and PNG to your pages and posts.
+= Can I resize images when uploaded? =
+Yes, when you are in the setting activate "Resize when images are uploaded"
 
-= Is it possible to decide not only the position but also the quality of the images? =
+= What formats does it support? =
+It supports jpg and png formats in accordance with wordpress directives.
+
+= Is it possible to decide not only the size but also the quality of the images? =
 Yes, you can decide whether to compress high, medium or low quality images.
 
 = Can I go back once resized? =
@@ -48,8 +51,38 @@ No, the optimized images overwrite the original images so if you don't make a ba
 = Can I decide which images to optimize? =
 Yes, you can select from the media library (list version) the images to be optimized, or use the hooks to extend the script.
 
-= What about Bulk image resizer =
+= How can I add a filter? =
+You can customize which images to optimize and how, through two filters
 
+`<?php 
+/**
+ * resize images uploaded
+ * If it is a post it resizes to 800x800 pixels, if in the title there is no_compress it does not compress it.
+ * @return  Boolean|Array [width:int,height:int]
+ */
+function fn_bir_resize_image ($filename, $attachment_id) {
+    if (stripos($filename,"no_compress")) {
+        return false;
+    }
+    $parent_id = wp_get_post_parent_id( $attachment_id);
+    if ($parent_id > 0) {
+        $post_type = get_post_type( $parent_id );
+        if ($post_type == "post") {
+            return [800,800];
+        }
+    }
+    return true;
+}
+// Called during bulk.
+add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
+?>`
+
+Hooks: 
+op_bir_resize_image_bulk_suffix returns the suffix to be added to the image if the original is not deleted
+bulk-image-resizer-before-setup-form adds html to the beginning of the setting form
+bulk-image-resizer-after-setup-form adds html to the end of the setting form
+
+= What about Bulk image resizer =
 When you upload an image to wordpress, thumbs are created for the template, but the uploaded image is saved and sometimes used.
 Bulk image resizer resizes uploaded images to optimize site speed and server space.
 
@@ -57,52 +90,25 @@ Bulk image resizer resizes uploaded images to optimize site speed and server spa
 Images are overwritten at the size you set, so it's important to make a backup first.
 They assume no responsibility for any malfunctions or loss of information resulting from the use of the plugin.
 
-== Customize the code with filters ==
-You can customize which images to optimize and how through two filters
 
-`<?php 
-/**
- * Only resize images uploaded by articles
- * @return  Boolean|Array [width:int,height:int]
- */
-function fn_bir_resize_image_bulk ($filename, $attachment_id) {
-	$parent_id = wp_get_post_parent_id( $attachment_id);
-	if ($parent_id > 0) {
-		$post_type = get_post_type( $parent_id );
-		if ($post_type == "post") {
-			return true;
-		}
-	}
-	return false;
-}
-// Called during bulk.
-add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
-?>`
-
-
-`<?php 
-/**
- * Only resize images uploaded by articles when they are uploaded
- * @return  Boolean|Array [width:int,height:int]
- */
-function fn_bir_resize_image_uploading ($filename, $post_id) {
-	$post_type = get_post_type( $post_id );
-	if ($post_type == "post") {
-		return true;
-	}
-	return false;
-}
-// Called when a new image is loaded
-add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10, 2);
-?>`
 
 == Screenshots ==
 
 1. The appearance of the page for the resize bulk
-2. The column added to the media library
-3. The bulk added to the media library
+2. The bulk added to the media library
 
 == Changelog ==
+
+= 1.2.0 -  =
+* Text corrections
+* riscritto il sistema dei setting
+* aggiunti gli hook nel form dei setting
+* Aggiunto l'opzione deleting original
+
+= 1.1.0 - 2021-06-15 =
+* Sanitize all input
+* Validate all data 
+* Escape allprint
 
 = 1.0.0 - 2021-06-02 =
 * Fixed: Complete bulk messages

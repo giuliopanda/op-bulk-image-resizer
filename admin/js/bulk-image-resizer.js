@@ -58,6 +58,12 @@ jQuery(document).ready(function () {
     });
     jQuery('#selectPresetDimension').change();
 
+    jQuery('#resizeDeleteOriginal').change(function () {
+        check_message_delete_Original();
+    });
+
+    
+    check_message_delete_Original();
     /**
      * SALVO I DATI QUANDO SI FA SUBMIT
      */ 
@@ -65,6 +71,7 @@ jQuery(document).ready(function () {
         if (jQuery('#opContainer').hasClass('js-state-resize-processing')) {
             return false;
         }
+        
         let max_width = parseInt(jQuery('#resizeMaxWidth').val());
         conf_width_yes = true;
         if (max_width < 500) {
@@ -76,24 +83,23 @@ jQuery(document).ready(function () {
             conf_height_yes = confirm(t9n_confirm_2);
         }
         if (conf_width_yes && conf_height_yes) {
+            let data = jQuery('#opBulkImageResizerSetup').serialize();
             jQuery('#opSettingsBlock').addClass('js-state-submit');
-          
             toggle_setting();
-            let resizeOnUpload = 0;
-            if (jQuery('#resizeOnUpload').is(':checked') ) {
-                resizeOnUpload = jQuery('#resizeOnUpload').val();
-            }
+            
             // Salvo i dati
             jQuery.ajax({
                 method: "GET",
                 url: admin_ajax,
                 dataType: "json",
-                data: { action: "op_save_configuration", op_resize_max_width: max_width, op_resize_max_height: max_height, op_resize_quality: jQuery('#settingQuality').val(), op_resize_on_upload: resizeOnUpload }
+                data: data
             }).done(function (ris) {
                 jQuery('#opSettingsBlock').removeClass('js-state-submit');
                 toggle_setting();
-                if (!ris.updated ) {
-                    alert(ris.msg);
+                if (! ris.updated ) {
+                    jQuery('#setup_message').empty().append('<div class="op-alert-warning">' + ris.msg + '</div>');
+                } else {
+                    jQuery('#setup_message').empty().append('<div class="op-alert-info">' + ris.msg + '</div>');
                 }
             });
         } 
@@ -310,6 +316,18 @@ function toggle_setting() {
         jQuery('.js-running-input-disable').prop('disabled', true);
      } else {
         jQuery('.js-running-input-disable').prop('disabled', false);
+    }
+}
+
+function check_message_delete_Original() {
+    console.log('check_message_delete_Original ' + jQuery('#resizeDeleteOriginal').is(':checked'))
+    if (jQuery('#resizeDeleteOriginal').is(':checked')) {
+        // TODO
+        jQuery('#delete_image_yes_msg').css('display', 'block');
+        jQuery('#delete_image_no_msg').css('display', 'none');
+    } else {
+        jQuery('#delete_image_yes_msg').css('display', 'none');
+        jQuery('#delete_image_no_msg').css('display', 'block');
     }
 }
 

@@ -257,3 +257,17 @@ input:checked + .slider:before {
 .js-state-setting-custom .js-custom-show {display:grid !important;}
 
 
+
+@media only screen and (max-width: 768px) {
+    .op-grid-2-col {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-column-gap: 0;
+        grid-row-gap: 1rem;
+    }
+    .op-block-order-1 {order:1}
+    .op-block-order-2 {order:2}
+    .op-block-order-3 {order:3}
+    .op-block-order-4 {order:4}
+
+}

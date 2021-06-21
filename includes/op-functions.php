@@ -5,8 +5,8 @@ namespace opBulkImageResizer\Includes\OpFunctions;
  * 
  * @since      0.9.0
  *
- * @package    op-bulk-image-resizer
- * @subpackage op-bulk-image-resizer/includes
+ * @package    bulk-image-resizer
+ * @subpackage bulk-image-resizer/includes
  */
 
 if (!defined('WPINC')) die;
@@ -43,10 +43,10 @@ function html_select_dimension($val) {
  * @param string $val 60|75|88
  * @return string Html
  */
-function html_select_quality($val) {
+function html_select_quality($val = 75) {
     $dim = array('60'=>'LOW', '75'=>'MEDIUM', '88'=>'HIGHT');
     ?>
-    <select name="op_resize_quality" id="settingQuality" class="js-running-input-disable">
+    <select name="op_resize[quality]" id="settingQuality" class="js-running-input-disable">
     <?php
         foreach ($dim as $key=>$label) {
             $selected = ($key == $val) ? ' selected="selected"' : ""; 
@@ -75,13 +75,15 @@ function get_total_img() {
  */
 function op_optimize_single_img($attachment_id)
 {
-    list($width, $height, $quality) = op_get_resize_options();
-   
+    $json_option = op_get_resize_options();
+    $width      = $json_option['max_width'];
+    $height     = $json_option['max_height'];
+    $quality    = $json_option['quality'];
    // TODO: qualche volta  wp_get_original_image_path($attachment_id); 
    // get_attached_file invece ritorna l'immagine lavorata!
    // IN una versione futura si puà far scegliere se ridimensionare l'originale o una copia
-    $path_img = get_attached_file($attachment_id);
-    if (file_is_valid_image($path_img)) {
+    $path_attached = get_attached_file($attachment_id);
+    if (file_is_valid_image($path_attached)) {
         $resize = true;
         /**
          * Resize image while bulk. 
@@ -93,7 +95,7 @@ function op_optimize_single_img($attachment_id)
          * @param int $attachment_id
          * @return boolean|array [width,height]
          */
-        $ris_filter = apply_filters( 'op_bir_resize_image_bulk', wp_basename($path_img), $attachment_id);
+        $ris_filter = apply_filters( 'op_bir_resize_image_bulk', wp_basename($path_attached), $attachment_id);
         if (is_array($ris_filter) && count($ris_filter) == 2) {
             if (array_key_exists('width', $ris_filter) && array_key_exists('height', $ris_filter)) {
                 $width = $ris_filter['width'];
@@ -106,18 +108,88 @@ function op_optimize_single_img($attachment_id)
             $resize = $ris_filter;
         }
         if (!$resize) return $upload;
-        $img = wp_get_image_editor($path_img);
 
+        // se esiste l'original
+        $new_file_name = "";
+        $old_file_size = 0;
+        $path_original =  wp_get_original_image_path($attachment_id);
+        if ($path_original != "" && $path_original != $path_attached) {
+           
+            $meta_original_image = $path_original;
+            $img = wp_get_image_editor($path_original);
+            $old_file_path = $path_original;
+            if (is_wp_error($img)) {
+                $img = wp_get_image_editor($path_attached);
+                $old_file_path = $path_attached;
+                $new_file_name = $path_attached;
+                $meta_original_image = $path_attached;
+            } else {
+                if ($json_option['delete_original'] == 1) {
+                    $new_file_name = $path_original;
+                    unlink($path_attached);
+                } else {
+
+                    $new_file_name = $path_attached;
+                  
+                }
+            }
+        } else {
+            // NON ESISTE L'ORIGINAL oppure hanno lo stesso nome
+            $meta_original_image = $path_attached;
+            if ($json_option['delete_original'] == 1) {
+                $new_file_name = $path_attached;
+            } else {
+                // non devo sovrascrivere l'originale
+                 $new_file_name = "";
+            }
+            $img = wp_get_image_editor($path_attached);
+            $old_file_path = $path_attached;
+            if ($path_original == "") {
+               $meta_original_image = $path_attached;
+            }
+        }
         if (!is_wp_error($img)) {
-            if ($width > 100 && $height > 100) {
+            
+            if ($width > 99 && $height > 99) {
                 $img->resize($width, $height); 
             }
             $img->set_quality($quality);
-            $save = $img->save($path_img);
+            if ($json_option['delete_original'] == 0 && $new_file_name == "") {
+                $suffix = apply_filters( 'op_bir_resize_image_bulk_suffix', 'compress');
+                $new_file_name = $img->generate_filename( $suffix );
+                $suffix_k = 0;
+                while (file_exists( $new_file_name ) && $suffix_k < 999 ) {
+                    $new_file_name = $img->generate_filename( $suffix."-".$suffix_k);
+                    $suffix_k++;
+                }
+                
+            }
+            $old_file = file_get_contents($old_file_path);
+            $save = $img->save($new_file_name);
+            // TSE LA COMPRESSIONE NON HA MIGLIORATO LA SITUAZIONE!  
+            
             $meta = wp_get_attachment_metadata($attachment_id, true);
-            $meta['width'] = $save['width'];
-            $meta['height'] = $save['height'];
-            wp_update_attachment_metadata($attachment_id, $meta);
+            $meta['original_image'] = wp_basename($meta_original_image);
+            clearstatcache();
+            if ( filesize($old_file_path) < filesize($new_file_name)) {
+               
+                
+                // TORNO ALLA CONDIZIONE DI PARTENZA!
+                if ($new_file_name != "" && $path_original != $new_file_name ) {
+                    unlink($new_file_name);
+                    $new_file_name = $path_original;
+                }
+                file_put_contents($new_file_name, $old_file);
+                // TODO AGGIUNGO UN METADATO DI INFO!s
+                update_post_meta( $attachment_id, '_bulk_image_resizer_non_optimized', '1');
+                
+            } else if (!is_wp_error($save)) {   
+                update_attached_file($attachment_id, $new_file_name);
+                $meta['width'] = $save['width'];
+                $meta['height'] = $save['height'];
+
+            }
+             wp_update_attachment_metadata($attachment_id, $meta);
             // 
             return $save;
         } else {
@@ -270,12 +342,23 @@ function prepare_images_stat() {
     $images_file_size = 0;
     $tot_img = $wpdb->get_results("SELECT ID, post_mime_type, post_title FROM `" . $wpdb->prefix . "posts` WHERE `post_mime_type` LIKE (\"image%\")  AND post_type = \"attachment\" ");
     $temp_attacment_meta = $wpdb->get_results("SELECT *  FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` = \"_wp_attachment_metadata\"");
+   /*   foreach ($temp_attacment_meta as $am) {
+    var_dump (maybe_unserialize($am->meta_value));
+      }
+    die;
+    */
     $upload_dir = wp_upload_dir();
     $attacment_meta = array();
     foreach ($temp_attacment_meta as $am) {
         $temp = maybe_unserialize($am->meta_value);
-        if (isset($temp['width']) && isset($temp['height']) && isset($temp['file']) && is_file($upload_dir['basedir'] . "/" . $temp['file'])) {
-            $attacment_meta[$am->post_id] = ['width' => $temp['width'], 'height' => $temp['height'], 'file' => $temp['file'], 'filesize' => filesize($upload_dir['basedir'] . "/" . $temp['file'])];
+        if (is_array($temp) && isset($temp['width']) && isset($temp['height']) && isset($temp['file']) && is_file($upload_dir['basedir'] . "/" . $temp['file'])) {
+            $filesize = filesize($upload_dir['basedir'] . "/" .$temp['file']);
+            if (isset ($temp['original_image'])) {
+                $ori_path = $upload_dir['basedir'] . "/" .dirname($temp['file'])."/". $temp['original_image'];
+                // print "<p>". $ori_path . "</p>";
+                $filesize += filesize($ori_path);
+            }
+            $attacment_meta[$am->post_id] = ['width' => $temp['width'], 'height' => $temp['height'], 'file' => $temp['file'], 'filesize' =>$filesize];
         }
     }
 
@@ -336,13 +419,80 @@ function prepare_images_stat() {
 }
 
 /**
- * Ritorna le opzioni o i default
- * list($width,$height,$quality) = gp_get_resize_options();
- * @return Array [width,height,quality]
+ * Ritorna l'array delle opzioni o se non impostati i default
+ * @param String $key Optional ritorna direttamente una variabile invece dell'array
+ * @param String $default Se non esiste la variabile ritorna un default invece di false
+ * @return String|Array [width,height,quality, delete_original, on_upload] Può ritornare altri valori se presenti hook
  */
-function op_get_resize_options() {
-    $width = (int)get_option('op_resize_max_width', '1920');
-    $height = (int)get_option('op_resize_max_height', '1080');
-    $quality = (int)get_option('op_resize_quality', '75');
-    return array($width, $height, $quality);
+function op_get_resize_options($key = "", $default = false) {
+    $json = get_option('bulk_image_resizer', '[]');
+    $json  = json_decode($json, true);
+    if (json_last_error() != JSON_ERROR_NONE) {
+         $json  = array();
+    }
+    if (!array_key_exists('max_width', $json)) {
+        $json['max_width'] = 1920; 
+    } else {
+        $json['max_width'] = absint($json['max_width']);
+    }
+    if (!array_key_exists('max_height', $json)) {
+       $json['max_height'] = 1080; 
+    } else {
+        $json['max_height'] = absint($json['max_height']);
+    }
+    if (!array_key_exists('height', $json)) {
+        $json['quality'] = 75; 
+    } else {
+        $json['quality'] = absint($json['quality']);
+    }
+    if ($key != "") {
+        if (array_key_exists($key, $json)) {
+            return $json[$key];
+        } else {
+            return $default;
+        }
+    } else {
+        return $json;
+    }
+}
+
+
+/**
+ * Torna tutte le info che possono servirmi di un'immagine
+ * @param Number $path_img
+ * @return Array  {"is_valid":false, "width":0, "height":0, "file_size":0, "class_resize":"gp_color_ok", "class_size":"gp_color_ok","show_btn":false, "is_writable": true}
+ */
+function op_get_image_info($path_img) {
+    $result  = array('is_valid'=> false, 'width'=>0, 'height'=>0, 'file_size'=>0, 'class_resize'=>'gp_color_ok', 'class_size'=>'gp_color_ok','show_btn'=>false, 'is_writable'=> true, 'max_quality'=>0);
+    if (file_is_valid_image($path_img)) {
+        $json_option = op_get_resize_options();
+        $width      = $json_option['max_width'];
+        $height     = $json_option['max_height'];
+        $quality    = $json_option['quality'];
+        $img = wp_get_image_editor($path_img);
+        if (is_wp_error($img)) {
+            return $result;
+        }
+        $result['is_valid'] = true;
+        $img2 = $img->get_size();	
+        $result['width'] = $img2['width']; 
+        $result['height'] = $img2['height']; 
+        $result['file_size'] = filesize($path_img);
+        if ($width < $img2['width'] || $height < $img2['height']) {
+            $result['show_btn'] = true;
+            $result['class_resize'] = "gp_color_warning";
+        } 
+        if ($max_quality < $bytes && stripos($path_img,'.jpg') !== false) {
+            $result['show_btn']= true;
+            $result['class_size']  = "gp_color_warning";
+        }
+        if (!wp_is_writable($path_img)) {
+            $result['show_btn']= false;
+            $result['is_writable'] = false;
+        }
+        if ( stripos($path_img,'.jpg') !== false) {
+            $result['max_quality'] = ($width * $height * .6) * ($quality / 150); // quanto dovrebbe essere al massimo l'immagine
+        } 
+    }
+    return $result;
 }

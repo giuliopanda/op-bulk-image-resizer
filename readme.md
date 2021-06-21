@@ -84,10 +84,10 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 
 # Screenshots
  
-![The appearance of the page for the resize bulk](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-1.jpg)
+![The appearance of the page for the resize bulk](https://raw.githubusercontent.com/giuliopanda/bulk-image-resizer/main/assets/screenshot-1.jpg)
 
 
-![The column added to the media library](https://raw.githubusercontent.com/giuliopanda/op-bulk-image-resizer/main/assets/screenshot-2.jpg)
+![The column added to the media library](https://raw.githubusercontent.com/giuliopanda/bulk-image-resizer/main/assets/screenshot-2.jpg)
 
 
 # Changelog

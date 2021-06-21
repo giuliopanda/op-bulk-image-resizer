@@ -3,8 +3,8 @@
  * Le azioni per le chiamate Ajax
  * @since      1.1.0
  *
- * @package    op-bulk-image-resizer
- * @subpackage op-bulk-image-resizer/includes
+ * @package    bulk-image-resizer
+ * @subpackage bulk-image-resizer/includes
  */
 use opBulkImageResizer\Includes\OpFunctions AS Opfn;
 if (!is_admin()) return;
@@ -34,29 +34,15 @@ class Bulk_image_resizer_loader_ajax {
 	*/
 	public function save_configuration() {
 		global $wpdb;
-		$max_width = absint(@$_REQUEST['op_resize_max_width']);
-		$max_height = absint(@$_REQUEST['op_resize_max_height']);
-		$quality = absint($_REQUEST['op_resize_quality']);
-		$resize = absint(@$_REQUEST['op_resize_on_upload']);
-		$result = ['updated' =>1, 'msg'=>''];
-		if ($resize != 1) {
-			$resize = 0;
-		}
-		if ($max_width >= 400 && $max_height >= 400 && $result['updated'] == 1) {
-			update_option('op_resize_max_width', $max_width, false);	
-			update_option('op_resize_max_height',$max_height, false);	
-			update_option('op_resize_quality', $quality, false);	
-			update_option('op_resize_on_upload', $resize, false);		
-		} else {
-			$result = ['updated' =>0, 'msg'=>__('Height and width must be greater than 400px','op-bulk-image-resizer')];
-		}
+		$result = ['updated' =>1, 'msg'=>__('Setting saved','bulk_image_resizer')];
+		update_option('bulk_image_resizer', json_encode($_REQUEST['op_resize']), false);	
 		wp_send_json($result);
 	}
 	/**
 	 *  Calcolo le statistiche
 	 * Stampa un json con questa struttura:
-	{"data_size":{"[timestamp]":[bytes]},"tot_images":[number],"images_size":[bytes],"last_update":[timestamp],"scatter":{"datasets":[{"label":"jpeg","data":[{"x":[Number],"y":[Number],"img":"[Text]","tot":[Number],"gap":[Number],"r":[Number]}]},"data_size_graph":{"labels":["TEXT"],"datasets":[{"data":[[NUMBER]]}]}}
-	* @link /wp-admin/admin-ajax.php?action=op_calc_stats
+	 * {"data_size":{"[timestamp]":[bytes]},"tot_images":[number],"images_size":[bytes],"last_update":[timestamp],"scatter":{"datasets":[{"label":"jpeg","data":[{"x":[Number],"y":[Number],"img":"[Text]","tot":[Number],"gap":[Number],"r":[Number]}]},"data_size_graph":{"labels":["TEXT"],"datasets":[{"data":[[NUMBER]]}]}}
+	 * @link /wp-admin/admin-ajax.php?action=op_calc_stats
 	*/
 	public function calc_stats() {
 		global $wpdb;

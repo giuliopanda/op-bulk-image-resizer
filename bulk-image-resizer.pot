@@ -1,105 +1,92 @@
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Optica press bulk image resizer\n"
+"Project-Id-Version: Bulk image resizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-27 07:51+0000\n"
-"PO-Revision-Date: 2021-06-15 16:34+0000\n"
-"Last-Translator: \n"
-"Language-Team: Italian\n"
-"Language: it_IT\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"POT-Creation-Date: 2021-06-21 10:17+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: GIULIO PANDOLFELLI GIULIOPANDA@GMAIL.COM\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.5.2; wp-5.7.2\n"
-"X-Domain: op-bulk-image-resizer"
+"X-Domain: bulk-image-resizer"
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:20
 msgid ""
 "<b> Warning: </b> The original images will be resized and overwritten, so it "
 "is always best to backup before running the script."
 msgstr ""
-"<b>Attenzione!</b> Le immagini originali verranno ridimensionate e "
-"sovrascritte, quindi è sempre meglio fare un backup prima di avviare lo "
-"script!"
 
 #: admin/partials/bulk-image-resizer-popup-activation-plugin.php:24
-#| msgid ""
-#| "<b>Inside Tools > Optica press bulk image resizer </b> set the settings "
-#| "and you can start the bulk to resize all images"
 msgid ""
 "<b>Inside Tools > Bulk image resizer </b> set the settings and you can start "
 "the bulk to resize all images"
 msgstr ""
-"<b>Dentro Tools > Bulk image resizer</b> setti le impostazioni e puoi "
-"avviare il bulk per ridimensionare tutte le immagini"
 
 #: admin/partials/bulk-image-resizer-popup-activation-plugin.php:25
 msgid ""
 "Among the settings you can decide to allow the plugin to resize images when "
 "they are loaded."
 msgstr ""
-"Tra le impostazioni puoi decidere di permettere al plugin di ridimensionare "
-"le immagini quando queste vengono caricate."
 
 #: includes/class-bulk-image-resizer-loader.php:281
 msgid "Analyzing the update in progress ..."
-msgstr "Analisi dell'aggiornamento in corso..."
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:279
 msgid "Are you sure you want to leave the page?"
-msgstr "Sei sicuro di voler abbandonare la pagina?"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:278
 msgid "Are you sure you want to resize images with a height less than 500px?"
 msgstr ""
-"Sei sicuro di voler ridimensionare le immagini con una altezza inferiore a "
-"500px?"
 
 #: includes/class-bulk-image-resizer-loader.php:277
 msgid "Are you sure you want to resize images with a width less than 500px?"
 msgstr ""
-"Sei sicuro di voler ridimensionare le immagini con una larghezza inferiore a "
-"500px?"
 
 #: admin/partials/bulk-image-resizer-container.php:16
 msgid "BULK IMAGE RESIZE"
-msgstr "BULK IMAGE RESIZE"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:17
 msgid "BULK IMAGE RESIZER"
-msgstr "BULK IMAGE RESIZER"
+msgstr ""
 
-#: admin/bulk-image-resizer-admin.php:23
+#: admin/bulk-image-resizer-admin.php:23 
 #: admin/class-bulk-image-resiers-admin.php:23
 msgid "Bulk image resizer"
-msgstr "Bulk image resizer"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-setup.php:22
 msgid "Compression Quality"
-msgstr "Compression Quality"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-setup.php:16
 msgid "Dimensions"
-msgstr "Dimensioni"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-container.php:38
 msgid "DISTRIBUTION OF IMAGES"
-msgstr "DISTRIBUZIONE DELLE IMMAGINI"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:283
 msgid "Do not leave the page while you are resizing your images"
-msgstr "Non abbandonare la pagina mentre si stanno ridimensionando le immagini"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:290
 msgid "Estimated time analysis in progress."
-msgstr "Analisi del tempo stimato in corso."
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:289
 #, php-format
 msgid "Estimated time remaining: %s"
-msgstr "Tempo stimato rimanente: %s"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-popup-activation-plugin.php:26
 msgid ""
@@ -107,68 +94,63 @@ msgid ""
 "shows you the image data and the possibility to resize for groups of "
 "selected images."
 msgstr ""
-"Infine Su <b>Media Library in visualizzazione elenco</b> hai una nuova "
-"colonna che ti mostra i dati dell'immagine e la possibilità di fare il "
-"resize per gruppi di immagini selezionate."
 
 #. Author of the plugin
 msgid "Giulio Pandolfelli"
-msgstr "Giulio Pandolfelli"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:167
 msgid "go to Bulk image resizer"
-msgstr "Vail al plugin"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-popup-activation-plugin.php:29
 msgid "Go to the plugin"
-msgstr "Vai al plugin"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-container.php:22
 msgid "HDD SPACE OCCUPIED"
-msgstr "SPAZIO OCCUPATO"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader-ajax.php:51
 msgid "Height and width must be greater than 400px"
-msgstr "Le dimensioni delle immagini devono essere maggiori di 400px"
+msgstr ""
 
 #. URI of the plugin
-msgid "https://github.com/giuliopanda/op-bulk-image-resizer"
-msgstr "https://github.com/giuliopanda/op-bulk-image-resizer"
+msgid "https://github.com/giuliopanda/bulk-image-resizer"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:293
 msgid "I am having difficulty contacting the server."
-msgstr "Sto Incontrando delle difficoltà nel contattare il server."
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:282
 msgid "I start resizing the images"
-msgstr "Avvio il resize delle immagini"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-setup.php:34
 msgid "Max height"
-msgstr "Altezza mazzima"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-setup.php:28
 msgid "Max width"
-msgstr "Larghezza massima"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:292
 msgid "No images found to update"
-msgstr "Nessuna immagine trovata da aggiornare"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:35
 msgid "Notifications"
-msgstr "Notifiche"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:287
 #, php-format
 msgid "Now the used space is: <b>%s</b>"
-msgstr "Ora lo spazio usato è: <b>%s</b>"
+msgstr ""
 
 #. Name of the plugin
-#, fuzzy
-#| msgid "Bulk image Resize"
 msgid "Op Bulk image resizer"
-msgstr "Bulk image resize"
+msgstr ""
 
 #. Description of the plugin
 msgid ""
@@ -176,111 +158,97 @@ msgid ""
 "plugin or to perform batch optimization. Go to \"Media library (list view)\" "
 "to optimize individual images."
 msgstr ""
-"Ottimizza le immagini caricate sul server. Vai su \"strumenti\" per "
-"configurare il plugin o per eseguire l'ottimizzazione in batch. Vai a "
-"\"Libreria multimediale (visualizzazione elenco)\" per ottimizzare le "
-"singole immagini."
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:28
 msgid "Pause"
-msgstr "Pausa"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:38
-#| msgid ""
-#| "Remember that you can optimize a group of images from media> library list "
-#| "view. Just select the images and resize them from group actions> op "
-#| "Resize (widthXheight)"
 msgid ""
 "Remember that you can optimize a group of images from media> library list "
 "view. Just select the images and resize them from group actions > Resize "
 "(widthXheight)"
 msgstr ""
-"Ricordati che puoi ottimizzare un gruppo di immagini da  media> library list "
-". Basta selezionare le immagini e ridimensionarle da azioni di gruppo > "
-"Ridimensiona (widthXheight)"
 
 #: admin/partials/bulk-image-resizer-block-setup.php:40
 msgid "Resize when images are loaded"
-msgstr "Ridimensiona quando vengono caricate le immagini"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:48
 #, php-format
 msgid "Resize: (%s)"
-msgstr "Ridimensiona: (%s)"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:27
 msgid "Resume"
-msgstr "Riprendi"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:43
 msgid "Resume the update"
-msgstr "Riprendi l'aggiornamento"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-setup.php:53
 msgid "Save your changes"
-msgstr "Salva le modifiche"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-container.php:27
 msgid "Saved images:"
-msgstr "Immagini salvate:"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-setup.php:13
 msgid "SETTINGS"
-msgstr "IMPOSTAZIONI"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-container.php:26
 msgid "Space occupied by images:"
-msgstr "Spazio occupato dalle immagini:"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:24
 msgid "Start the resize"
-msgstr "Avvia il ridimensionamento"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:291
 #, php-format
 msgid "Still to be processed: %s"
-msgstr "Devono essere ancora processate: %s"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-popup-activation-plugin.php:18
-#| msgid "Thank you for downloading Bulk rmage resize"
 msgid "Thank you for downloading Bulk image resize"
-msgstr "Grazie per aver scaricato Bulk image resize"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:288
 #, php-format
 msgid "The elapsed time is: %s"
-msgstr "Il tempo totale impiegato è stato: %s"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-popup-activation-plugin.php:21
 msgid ""
 "The plugin is opensource and without additional paid plans. Using this "
 "plugin you have three features:"
 msgstr ""
-"Il plugin è opensource e senza piani aggiuntivi a pagamento. Usando questo "
-"plugin hai tre funzionalità:"
 
 #: includes/class-bulk-image-resizer-loader.php:286
 msgid "The update has finished"
-msgstr "L'aggiornamento è terminato"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:285
 #, php-format
 msgid "They were spared: <b> %s </b>."
-msgstr "Sono stati risparmiati: <b> %s </b>."
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:276
 msgid "Updates are paused. Click on resume to continue."
-msgstr "Gli aggiornamenti sono in pausa. Clicca su riprendi per continuare"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:280
 msgid "Wait for the end of saving the settings"
-msgstr "Attendi la fine del salvataggio delle impostazioni"
+msgstr ""
 
 #: includes/class-bulk-image-resizer-loader.php:284
 msgid "We are almost there"
-msgstr "Ci siamo quasi"
+msgstr ""
 
 #: admin/partials/bulk-image-resizer-block-bulk.php:42
 #, php-format
 msgid "We found %s images to update out of %s total"
-msgstr "Sono state trovate %s immagini da aggiornare su %s totali"
+msgstr ""

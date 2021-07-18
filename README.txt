@@ -3,11 +3,11 @@ Contributors: giuliopanda
 Donate link: https://www.paypal.com/donate/?cmd=_donations&business=giuliopanda%40gmail.com&item_name=wordpress+plugin+Bulk+image+resizer
 Tags: convert,image,optimize,resize,attachment,photo
 Requires at least: 5.3
-Tested up to: 5.7.2
+Tested up to: 5.8
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.0
+Stable tag: 1.2.5
 
 You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
 
@@ -19,10 +19,11 @@ Bulk image resize allows you to optimize images uploaded to wordpress.
 - It is optimized to speed up the bulk process. 1000 images take a few minutes on a normal server.
 - You can enable the option to optimize images when uploaded to the server.
 - Allows you to decide the maximum size of the images and the quality in which they should be compressed.
-- Adds to media-library (list version) the possibility to select the images to be optimized
+- Adds to media-library (list version) the possibility to select the images to be optimized.
 - Still on media-library (list version) it adds an additional information column on the image.
-- Through graphics it allows you to monitor the status of the images on the server
+- Through graphics it allows you to monitor the status of the images on the server.
 - Ability to use specific hooks to customize optimization options.
+- It also resizes webp images.
 
  The GitHub repo can be found at [https://github.com/giuliopanda/bulk-image-resizer](https://github.com/giuliopanda/bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
@@ -40,19 +41,21 @@ Because it is opensource and you have no limits in use. It will allow you to mak
 Yes, when you are in the setting activate "Resize when images are uploaded"
 
 = What formats does it support? =
-It supports jpg and png formats in accordance with wordpress directives.
+It supports jpg, webp, (gif not animated) and png formats in accordance with wordpress directives.
 
 = Is it possible to decide not only the size but also the quality of the images? =
 Yes, you can decide whether to compress high, medium or low quality images.
 
 = Can I go back once resized? =
-No, the optimized images overwrite the original images so if you don't make a backup you can't go back.
+Yes if you haven't removed the original image. Otherwise no.
 
 = Can I decide which images to optimize? =
 Yes, you can select from the media library (list version) the images to be optimized, or use the hooks to extend the script.
 
 = How can I add a filter? =
-You can customize which images to optimize and how, through two filters
+You can customize which images to optimize and how, through 'op_bir_resize_image_bulk' filter.
+
+Example
 
 `<?php 
 /**
@@ -87,7 +90,7 @@ When you upload an image to wordpress, thumbs are created for the template, but 
 Bulk image resizer resizes uploaded images to optimize site speed and server space.
 
 **Be careful**
-Images are overwritten at the size you set, so it's important to make a backup first.
+If you remove the original images, The images are overwritten at the size you set, so it's important to make a backup first.
 They assume no responsibility for any malfunctions or loss of information resulting from the use of the plugin.
 
 
@@ -99,11 +102,15 @@ They assume no responsibility for any malfunctions or loss of information result
 
 == Changelog ==
 
-= 1.2.0 -  =
+= 1.2.5 - 2021-07-19 =
+* Fixed bug with animated gif
+* Test images with a webp extension
+
+= 1.2.0 - 2021-06-22 =
 * Text corrections
-* riscritto il sistema dei setting
-* aggiunti gli hook nel form dei setting
-* Aggiunto l'opzione deleting original
+* Rewritten the setting system
+* Added hooks in the settings form
+* Added deleting original option
 
 = 1.1.0 - 2021-06-15 =
 * Sanitize all input

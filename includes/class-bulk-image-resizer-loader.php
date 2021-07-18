@@ -130,8 +130,8 @@ class Bulk_image_resizer_loader {
 				} else {
 					$img_original['class_resize'] = 'gp_color_ok';
 				}
-				echo '<div class="' . esc_attr($img_original['class_resize']) . '">'. __('Original:', 'bulk-image-resizer') . ' ' . esc_html($img_original['width'] . 'px X ' . $img_original['height']) . ' ' .  __('size:','bulk-image-resizer'). ' ' .  size_format($img_original['file_size'], 2)  . '</div>';
-				echo '<div class="' . esc_attr($img_attached['class_resize']) . '">'. __('Compressed:', 'bulk-image-resizer') . ' ' . esc_html($img_attached['width'] . 'px X ' . $img_attached['height']) . ' ' .  __('size:','bulk-image-resizer') . ' ' .   size_format($img_attached['file_size'], 2) . '</div>';
+				echo '<div class="' . esc_attr($img_original['class_resize']) . '">'. __('Original:', 'bulk-image-resizer') . ' ' . esc_html($img_original['width'] . 'px X ' . $img_original['height']) . 'px ' .  __('size:','bulk-image-resizer'). ' ' .  size_format($img_original['file_size'], 2)  . '</div>';
+				echo '<div class="' . esc_attr($img_attached['class_resize']) . '">'. __('Compressed:', 'bulk-image-resizer') . ' ' . esc_html($img_attached['width'] . 'px X ' . $img_attached['height']) . 'px ' .  __('size:','bulk-image-resizer') . ' ' .   size_format($img_attached['file_size'], 2) . '</div>';
 				if ($override_options ) {
 					_e("A filter has overwritten the maximum image size");
 				}
@@ -147,14 +147,23 @@ class Bulk_image_resizer_loader {
 					if (!$resize) {
 						_e("A filter has been added that inhibits the resizing of this image");
 					} else {
-						echo '<div class="button button-primary button-small" onclick="op_single(' . esc_attr($post_id) . ', \'' . size_format($img_attached['file_size'], 2) . '\', \'' .  esc_attr($img_attached['width'] . 'px X ' . $img_attached['height']) . 'px\')">' . __('Optimize', 'bulk-image-resizer') . '</div>';
+						$exists_original = ($path_original != $path_attached && $path_attached != '' && $path_original != "");
+						if ($exists_original && $img_original['is_valid'] &&  $options['delete_original'] == 1) { 
+							$btn_msg = "Remove Original and resize (%s)";
+						} else {
+							$btn_msg = "Optimize (%s)";
+						}
+						echo '<div class="button button-primary button-small" onclick="op_single(' . esc_attr($post_id) . ', \'' . size_format($img_attached['file_size'], 2) . '\', \'' .  esc_attr($img_attached['width'] . 'px X ' . $img_attached['height']) . 'px\')">' . sprintf(__($btn_msg, 'bulk-image-resizer'), $options['max_width'] ."px X ". $options['max_height']."px"). '</div>';
+						
 			
 					}
 				}
 			}
 			echo '</div>';
 		} else if (!$img_attached['is_writable']) {
-			echo __("Attention the image is not writable");
+			echo __("Attention the image is not writable", 'bulk-image-resizer');
+		} else if (isset($img_attached['msg'])) {
+			echo __($img_attached['msg'], 'bulk-image-resizer');
 		}
 	}
 	

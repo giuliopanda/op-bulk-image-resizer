@@ -13,7 +13,7 @@ if (!defined('WPINC')) die;
 ?>
 <div class="wrap">
     <div id="opContainer" class="op-container">
-        <h1 class="wp-heading-inline"><?php _e('BULK IMAGE RESIZE', 'bulk-image-resizer'); ?></h1>
+        <h1 class="wp-heading-inline"><?php _e('BULK IMAGE RESIZER', 'bulk-image-resizer'); ?></h1>
         <div class="op-grid-2-col op-first-grid">
             <div class="op-block op-block-order-1">
                 <?php require(dirname(__FILE__)."/bulk-image-resizer-block-setup.php"); ?>

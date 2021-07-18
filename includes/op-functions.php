@@ -79,9 +79,6 @@ function op_optimize_single_img($attachment_id)
     $width      = $json_option['max_width'];
     $height     = $json_option['max_height'];
     $quality    = $json_option['quality'];
-   // TODO: qualche volta  wp_get_original_image_path($attachment_id); 
-   // get_attached_file invece ritorna l'immagine lavorata!
-   // IN una versione futura si puà far scegliere se ridimensionare l'originale o una copia
     $path_attached = get_attached_file($attachment_id);
     if (file_is_valid_image($path_attached)) {
         $resize = true;
@@ -107,6 +104,15 @@ function op_optimize_single_img($attachment_id)
         } elseif (is_bool($ris_filter)) {
             $resize = $ris_filter;
         }
+        /**
+         * @since 1.2.5 
+         * I don't compress animated gif
+         */
+        if ( stripos($path_attached,'.gif') !== false) {
+            $resize = !op_gif_animated($path_attached);
+        }
+
+
         if (!$resize) return $upload;
 
         // se esiste l'original
@@ -261,79 +267,8 @@ function op_convert_space_to_graph($data_size) {
 	return $dataset_size;
 }
 
-
 /**
- * NON LO USO!
- * C'è differenza tra come vengono salvati i dati e come vengono rappresentati.
- * Questa funzione converte i dati ricavati con quelli da visualizzare
- * @param Array $data I dati che si ricevono. $data[$key] è  [label:value, label:value] 
- * in data_bar label:timestamp value:bytes
- * in data_pie label:tipo file  value:numero_file
- * @param String $key Serve a definire la gestione dei colori data_pie|data_bar
- * @return Array  esempio ['labels'=>['a','b'], 'datasets'=> [['data'=> [10,20],'backgroundColor'=> ['rgb(255,99,132)','rgb(54,162,235)']]]];
- */
-function convert_data_option_to_graph($data, $key) {
-    $label_bar = array();
-    $data_values = array();
-    if ($key == "data_pie") {
-        $label_bar = array_keys($data[$key]);
-        $data_values = array_values($data[$key]);
-        $background_color = ['rgb(54, 162, 235)', 'rgb(255, 99, 132)', 'rgb(255, 205, 86)', 'rgb(43, 177, 164)', 'rgb(125, 54, 204)', 'rgb(142, 31, 31)', 'rgb(77, 77, 77)'];
-    } else {
-
-        // bar spazio
-        $background_color = array();
-        $array_jstat = array();
-        $time_bar = array();
-        $media = 1;
-        $count_media = 0;
-        // dkey è un timestamp
-        // dvalue sono i bytes occupati
-        // BUG: faccio substr di un TIMESTAMP!
-        foreach ($data[$key] as $dkey => $dvalue) {
-            $time_key = (new \DateTime())->setTimestamp($dkey)->format('m-d');
-            if (!isset($time_bar[$time_key])) {
-                $time_bar[$time_key] = 0;
-            }
-            $time_bar[$time_key]++;
-            $media += $dvalue;
-            $count_media++;
-        }
-        $media = ceil($media / $count_media);
-        $data[$key] = array_reverse($data[$key], true);
-        $temp_count_foreach = 0;
-        foreach ($data[$key] as $dkey => $dvalue) {
-            if ($dvalue != end($data_values)) {
-                $temp_count_foreach++;
-                if ($temp_count_foreach > 10) break;
-                $time_key = (new \DateTime())->setTimestamp($dkey);
-                $time = $time_key->format('m-d');
-                if (array_key_exists($time, $time_bar) && $time_bar[$time] > 1) {
-                    $label_bar[] = $time_key->format('m-d H:i');
-                } else {
-                    $label_bar[] = $time;
-                }
-                $data_values[] = $dvalue;
-                if ($dvalue <= $media) {
-                    $background_color[] = 'rgb(75, 192, 192)';
-                } else if ($dvalue <= $media * 1.5) {
-                    $background_color[] = 'rgb(255, 205, 86)';
-                } else if ($dvalue <= $media * 2) {
-                    $background_color[] = 'rgb(255, 159, 64)';
-                } else {
-                    $background_color[] = 'rgb(255, 99, 132)';
-                }
-            }
-        }
-        $data_values = array_reverse($data_values);
-        $label_bar = array_reverse($label_bar);
-        $background_color = array_reverse($background_color);
-    }
-    return ['labels' => $label_bar, 'datasets' => [['data' => $data_values, 'backgroundColor' => $background_color]]];
-}
-
-/**
- * Prepara le statistiche e ne ritorna i dati principali
+ * Prepare the statistics and return the main data
  * @return Array [$tot_imgages, $images_file_size, $datasets] 
  * $datasets =  ['label' => [], 'data' => [],  'backgroundColor' => '']
  */
@@ -419,10 +354,10 @@ function prepare_images_stat() {
 }
 
 /**
- * Ritorna l'array delle opzioni o se non impostati i default
- * @param String $key Optional ritorna direttamente una variabile invece dell'array
- * @param String $default Se non esiste la variabile ritorna un default invece di false
- * @return String|Array [width,height,quality, delete_original, on_upload] Può ritornare altri valori se presenti hook
+ * Returns the array of options or defaults if not set
+ * @param String $key Optional If present, it extracts a variable instead of the array
+ * @param String $default If the variable does not exist, it returns a default value instead of false
+ * @return String|Array [width,height,quality, delete_original, on_upload] It can return other values if hooks are present (??)
  */
 function op_get_resize_options($key = "", $default = false) {
     $json = get_option('bulk_image_resizer', '[]');
@@ -458,7 +393,7 @@ function op_get_resize_options($key = "", $default = false) {
 
 
 /**
- * Torna tutte le info che possono servirmi di un'immagine
+ * Back all the information that can help me with an image
  * @param Number $path_img
  * @return Array  {"is_valid":false, "width":0, "height":0, "file_size":0, "class_resize":"gp_color_ok", "class_size":"gp_color_ok","show_btn":false, "is_writable": true}
  */
@@ -493,6 +428,34 @@ function op_get_image_info($path_img) {
         if ( stripos($path_img,'.jpg') !== false) {
             $result['max_quality'] = ($width * $height * .6) * ($quality / 150); // quanto dovrebbe essere al massimo l'immagine
         } 
+        /** 
+         * @since 1.2.5
+         * I don't compress animated gif
+         */
+        if ( stripos($path_img,'.gif') !== false) {
+            if (op_gif_animated($path_img) ) {
+                $result['show_btn']= false;
+                $result['is_valid'] = false;
+                $result['msg'] = "Animated gif images are not resizable";
+            }
+        }
     }
     return $result;
+}
+
+/**
+ * Calculate the number of frames of a gif and return true if it is an animation
+ * @since 1.2.5 
+ * @param String $path_img The absolute path of the image
+ * @return Boolean
+ */
+function op_gif_animated($path_img) {
+    if(!($fh = @fopen($path_img, 'rb')))
+    return 0;
+    $count = 0;
+    while(!feof($fh) && $count < 2) {
+        $chunk = fread($fh, 1024 * 100); //read 100kb at a time
+        $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00[\x2C\x21]#s', $chunk, $matches);
+    }
+    return ($count > 1);
 }

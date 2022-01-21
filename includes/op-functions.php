@@ -380,6 +380,14 @@ function op_get_resize_options($key = "", $default = false) {
     } else {
         $json['quality'] = absint($json['quality']);
     }
+    if (!array_key_exists('delete_original', $json)) {
+        $json['delete_original'] = 0; 
+    } 
+    if (!array_key_exists('on_upload', $json)) {
+        $json['on_upload'] = 1; 
+    } 
+
+   
     if ($key != "") {
         if (array_key_exists($key, $json)) {
             return $json[$key];

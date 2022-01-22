@@ -71,7 +71,9 @@ class Bulk_image_resizer_loader {
 	 * @return array Amended array of columns to be displayed in the Media list table.
 	 */
 	public function media_columns_filesize($posts_columns) {
-		$posts_columns['bir'] = __('Bulk image resizer', 'bulk-image-resizer');
+		if (Opfn\check_image_editor()) {
+			$posts_columns['bir'] = __('Bulk image resizer', 'bulk-image-resizer');
+		}
 		return $posts_columns;
 	}
 	
@@ -83,9 +85,10 @@ class Bulk_image_resizer_loader {
 	 */
 	public function media_custom_column_filesize($column_name, $post_id)
 	{
-		if ('bir' !== $column_name) {
+		if ('bir' !== $column_name || !Opfn\check_image_editor() ) {
 			return;
 		}
+		
 		$path_attached = get_attached_file($post_id);
 		$img_attached = Opfn\op_get_image_info($path_attached);
 		if ($img_attached['is_valid'] && $img_attached['is_writable']) {
@@ -164,6 +167,8 @@ class Bulk_image_resizer_loader {
 			echo __("Attention the image is not writable", 'bulk-image-resizer');
 		} else if (isset($img_attached['msg'])) {
 			echo __($img_attached['msg'], 'bulk-image-resizer');
+		} else {
+			echo $path_attached." | ".$img_attached['is_valid']." - ".$img_attached['is_writable'];
 		}
 	}
 	
@@ -322,6 +327,7 @@ class Bulk_image_resizer_loader {
 				$resizer['max_height'] = (int)get_option('op_resize_max_height', '1080');
 				$resizer['quality'] = (int)get_option('op_resize_quality', '75');
 				$resizer['version'] = '1.2.0';
+
 				update_option('bulk_image_resizer', json_encode($resizer), false);	
 				delete_option('op_resize_max_width');
 				delete_option('op_resize_max_height');

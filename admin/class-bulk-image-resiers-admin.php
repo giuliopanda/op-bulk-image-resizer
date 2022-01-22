@@ -14,6 +14,7 @@ class Bulk_image_resizer_admin
  	    wp_enqueue_script( 'bulk-image-resizer-chart', plugin_dir_url( __FILE__ ) . 'js/chart.js');
  	    wp_enqueue_script( 'bulk-image-resizer-js'   , plugin_dir_url( __FILE__ ) . 'js/bulk-image-resizer.js');
 		$options = opBulkImageResizer\Includes\OpFunctions\op_get_resize_options();
+		$check_fn_editor = opBulkImageResizer\Includes\OpFunctions\check_image_editor();
         require (plugin_dir_path(__FILE__)."partials/bulk-image-resizer-container.php");
     }
     /**

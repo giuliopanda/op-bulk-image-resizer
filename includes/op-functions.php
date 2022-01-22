@@ -12,6 +12,12 @@ namespace opBulkImageResizer\Includes\OpFunctions;
 if (!defined('WPINC')) die;
 
 /**
+ * @var Boolean $global_bulk_image_resizer_check_editor; for check_image_editor cache
+ * @since 1.3.0
+ */
+$global_bulk_image_resizer_check_editor; 
+
+/**
  * Genera il select per le dimensioni preset
  * @param string $val 1280x720|1920x1080|2560x1440|2100x2100| custom values widthxheight
  * @return string Html
@@ -113,7 +119,7 @@ function op_optimize_single_img($attachment_id)
         }
 
 
-        if (!$resize) return $upload;
+        if (!$resize) return false;
 
         // se esiste l'original
         $new_file_name = "";
@@ -401,13 +407,36 @@ function op_get_resize_options($key = "", $default = false) {
 
 
 /**
+ * Check if the internal wordpress editor can be used or not
+ * @since      1.3.0
+ */
+
+function check_image_editor() {
+    global $global_bulk_image_resizer_check_editor;
+    if (is_bool($global_bulk_image_resizer_check_editor)) {
+        return $global_bulk_image_resizer_check_editor;
+    }
+    $path_check_img = plugins_url('bulk-image-resizer/1px.jpg' );
+    $img = wp_get_image_editor($path_check_img);
+    if (is_wp_error($img)) {
+        $global_bulk_image_resizer_check_editor = false;
+        return false;
+    } else {
+        $global_bulk_image_resizer_check_editor = true;
+        return true;
+    }
+
+}
+
+/**
  * Back all the information that can help me with an image
- * @param Number $path_img
+ * @param String $path_img
  * @return Array  {"is_valid":false, "width":0, "height":0, "file_size":0, "class_resize":"gp_color_ok", "class_size":"gp_color_ok","show_btn":false, "is_writable": true}
  */
 function op_get_image_info($path_img) {
     $result  = array('is_valid'=> false, 'width'=>0, 'height'=>0, 'file_size'=>0, 'class_resize'=>'gp_color_ok', 'class_size'=>'gp_color_ok','show_btn'=>false, 'is_writable'=> true, 'max_quality'=>0);
     if (file_is_valid_image($path_img)) {
+      
         $json_option = op_get_resize_options();
         $width      = $json_option['max_width'];
         $height     = $json_option['max_height'];
@@ -425,7 +454,7 @@ function op_get_image_info($path_img) {
             $result['show_btn'] = true;
             $result['class_resize'] = "gp_color_warning";
         } 
-        if ($max_quality < $bytes && stripos($path_img,'.jpg') !== false) {
+        if (stripos($path_img,'.jpg') !== false) {
             $result['show_btn']= true;
             $result['class_size']  = "gp_color_warning";
         }

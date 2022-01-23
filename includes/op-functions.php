@@ -408,7 +408,7 @@ function op_get_resize_options($key = "", $default = false) {
 
 /**
  * Check if the internal wordpress editor can be used or not
- * @since      1.3.0
+ * @since      1.2.6
  */
 
 function check_image_editor() {

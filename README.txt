@@ -102,6 +102,12 @@ They assume no responsibility for any malfunctions or loss of information result
 
 == Changelog ==
 
+= 1.2.6 - 2022-01-23 =
+* Fix install uninstall function (Thanks to @Mateusz Gbiorczyk)
+* Fix return error in wp_generate_attachment_metadata (Thanks to @Mateusz Gbiorczyk)
+* Fixed missing GD extension in php.ini
+* Fix warning
+
 = 1.2.5 - 2021-07-19 =
 * Fixed bug with animated gif
 * Test images with a webp extension

@@ -38,7 +38,6 @@ class Bulk_image_resizer_loader {
 		add_action('admin_notices', [$this,'welcome_message']);
 		// TEST di gestione inserimenti nuovo
 		add_filter( 'wp_generate_attachment_metadata',  [$this, 'wp_generate_attachment_metadata'], 10,2 ) ;
-		// uninstall e activate vengono chiamate da bulk-image-resizer.php
 		//viene chiamato ogni volta che un plugin viene aggiornato
 		add_action( 'upgrader_process_complete', [$this,  'upgrade_completed'], 10, 2 );
 	}
@@ -167,8 +166,6 @@ class Bulk_image_resizer_loader {
 			echo __("Attention the image is not writable", 'bulk-image-resizer');
 		} else if (isset($img_attached['msg'])) {
 			echo __($img_attached['msg'], 'bulk-image-resizer');
-		} else {
-			echo $path_attached." | ".$img_attached['is_valid']." - ".$img_attached['is_writable'];
 		}
 	}
 	
@@ -288,27 +285,17 @@ class Bulk_image_resizer_loader {
 	public function wp_generate_attachment_metadata( $attachment, $id) {
 		if (Opfn\op_get_resize_options('on_upload',0) == 1) {
 			Opfn\op_optimize_single_img($id);
-			$attachment = wp_get_attachment_metadata($id, true);
+			$return_attachment = wp_get_attachment_metadata($id, true);
+			if ($return_attachment !== false) {
+				$attachment = $return_attachment;
+			}
 		}
+		
 		return $attachment;
 	}
 	
-	/**
-	 * Quando viene rimosso il plugin
-	 */
-	public function uninstall() {
-		delete_option('op_resize_statistics');
-		delete_option('bulk_image_resizer');
-		delete_option('op_resize_images_done');
-		delete_option('bulk_image_resizer_welcome');
-	}
-	/**
-	 * Quando viene attivato il plugin
-	 */
-	function activate() {
-	// upgrade versione 1.1.0 > 1.2.0
-		update_option('bulk_image_resizer_welcome', 1, false);
-	}
+
+
 
 	/**
 	 * Evento chiamato ogni volta che un plugin o un tema viene aggiornato

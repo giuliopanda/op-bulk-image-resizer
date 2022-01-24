@@ -21,9 +21,9 @@
 
 if (!defined('WPINC')) die;
 define('bulk-image-resizer_VERSION', '1.2.6');
-
-require_once(plugin_dir_path( __FILE__ ) . "includes/op-functions.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/class-bulk-image-resizer-loader.php");
+define('BULK_IMAGE_RESIZER_DIR', plugin_dir_path( __FILE__ ) );
+require_once(BULK_IMAGE_RESIZER_DIR . "includes/op-functions.php");
+require_once(BULK_IMAGE_RESIZER_DIR . "includes/class-bulk-image-resizer-loader.php");
 $bulk_image_resizer_loader = new Bulk_image_resizer_loader();
 // Chiamo la funzione op_activate quando il plugin viene attivato
 
@@ -31,10 +31,10 @@ register_uninstall_hook(__FILE__, 'bulk_image_resizer_loader_uninstall');
 register_activation_hook( __FILE__,  'bulk_image_resizer_loader_activate' );
 
 if (!is_admin()) return;
-require_once(plugin_dir_path( __FILE__ ) . "admin/class-bulk-image-resiers-admin.php");
-require_once(plugin_dir_path( __FILE__ ) . "includes/class-bulk-image-resizer-loader-ajax.php");
+require_once(BULK_IMAGE_RESIZER_DIR . "admin/class-bulk-image-resiers-admin.php");
+require_once(BULK_IMAGE_RESIZER_DIR. "includes/class-bulk-image-resizer-loader-ajax.php");
 // Carico i file della lingua
-load_plugin_textdomain('bulk-image-resizer', false, plugin_dir_path( __FILE__ ) . 'languages');
+load_plugin_textdomain('bulk-image-resizer', false, BULK_IMAGE_RESIZER_DIR . 'languages');
 
 $bulk_image_resizer_ajax = new Bulk_image_resizer_loader_ajax();
 $admin = new Bulk_image_resizer_admin();

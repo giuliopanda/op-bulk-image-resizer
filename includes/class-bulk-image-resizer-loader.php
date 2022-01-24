@@ -70,7 +70,7 @@ class Bulk_image_resizer_loader {
 	 * @return array Amended array of columns to be displayed in the Media list table.
 	 */
 	public function media_columns_filesize($posts_columns) {
-		if (Opfn\check_image_editor()) {
+		if (Opfn\check_image_editor() == '') {
 			$posts_columns['bir'] = __('Bulk image resizer', 'bulk-image-resizer');
 		}
 		return $posts_columns;
@@ -84,7 +84,7 @@ class Bulk_image_resizer_loader {
 	 */
 	public function media_custom_column_filesize($column_name, $post_id)
 	{
-		if ('bir' !== $column_name || !Opfn\check_image_editor() ) {
+		if ('bir' !== $column_name || Opfn\check_image_editor() != '' ) {
 			return;
 		}
 		

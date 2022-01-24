@@ -12,8 +12,8 @@ namespace opBulkImageResizer\Includes\OpFunctions;
 if (!defined('WPINC')) die;
 
 /**
- * @var Boolean $global_bulk_image_resizer_check_editor; for check_image_editor cache
- * @since 1.3.0
+ * @var String $global_bulk_image_resizer_check_editor; for check_image_editor cache empty string for true
+ * @since 1.2.6
  */
 $global_bulk_image_resizer_check_editor; 
 
@@ -86,7 +86,7 @@ function op_optimize_single_img($attachment_id)
     $height     = $json_option['max_height'];
     $quality    = $json_option['quality'];
     $path_attached = get_attached_file($attachment_id);
-    if (file_is_valid_image($path_attached)) {
+    if (is_file($path_attached) && file_is_valid_image($path_attached)) {
         $resize = true;
         /**
          * Resize image while bulk. 
@@ -318,7 +318,7 @@ function prepare_images_stat() {
             $att = $attacment_meta[$img->ID];
             $images_file_size += $att['filesize'];
 
-            if (!is_array($chart_scatter[$post_mime_type])) {
+            if (array_key_exists($post_mime_type, $chart_scatter) && !is_array($chart_scatter[$post_mime_type])) {
                 $chart_scatter[$post_mime_type] = [];
             }
             $xkey = (floor($att['width'] / $gap) * $gap) . "x" . (floor($att['height'] / $gap) * $gap);
@@ -409,23 +409,36 @@ function op_get_resize_options($key = "", $default = false) {
 /**
  * Check if the internal wordpress editor can be used or not
  * @since      1.2.6
+ * @return String Error  (empty string = true)
  */
-
 function check_image_editor() {
     global $global_bulk_image_resizer_check_editor;
     if (is_bool($global_bulk_image_resizer_check_editor)) {
         return $global_bulk_image_resizer_check_editor;
     }
-    $path_check_img = plugins_url('bulk-image-resizer/1px.jpg' );
-    $img = wp_get_image_editor($path_check_img);
-    if (is_wp_error($img)) {
-        $global_bulk_image_resizer_check_editor = false;
-        return false;
-    } else {
-        $global_bulk_image_resizer_check_editor = true;
-        return true;
+    $path_check_img_dir = BULK_IMAGE_RESIZER_DIR.'1px.jpg';
+    $path_check_img_url = plugins_url('bulk-image-resizer/1px.jpg' );
+    if (!file_exists($path_check_img_dir)) {
+        if ( (! extension_loaded( 'gd' ) || ! function_exists( 'gd_info' )) && ( ! extension_loaded( 'imagick' ) || ! class_exists( 'Imagick', false ) || ! class_exists( 'ImagickPixel', false )) ) {
+            $global_bulk_image_resizer_check_editor =  __('There seems to be no php library for manipulating images.', 'bulk-image-resizer');
+        } else {
+            $global_bulk_image_resizer_check_editor =  '';
+        }
+        return $global_bulk_image_resizer_check_editor;
     }
-
+    $img = wp_get_image_editor($path_check_img_url);
+    if (is_wp_error($img)) {
+        $global_bulk_image_resizer_check_editor =  $img->get_error_message();
+        if ($img->get_error_code() == 'image_no_editor') {
+            if ( (! extension_loaded( 'gd' ) || ! function_exists( 'gd_info' )) && ( ! extension_loaded( 'imagick' ) || ! class_exists( 'Imagick', false ) || ! class_exists( 'ImagickPixel', false )) ) {
+                $global_bulk_image_resizer_check_editor =  __('There seems to be no php library for manipulating images.', 'bulk-image-resizer');
+            } 
+        }
+        return $global_bulk_image_resizer_check_editor;
+    } else {
+        $global_bulk_image_resizer_check_editor = '';
+        return '';
+    }
 }
 
 /**
@@ -435,7 +448,7 @@ function check_image_editor() {
  */
 function op_get_image_info($path_img) {
     $result  = array('is_valid'=> false, 'width'=>0, 'height'=>0, 'file_size'=>0, 'class_resize'=>'gp_color_ok', 'class_size'=>'gp_color_ok','show_btn'=>false, 'is_writable'=> true, 'max_quality'=>0);
-    if (file_is_valid_image($path_img)) {
+    if (is_file($path_img) && file_is_valid_image($path_img)) {
       
         $json_option = op_get_resize_options();
         $width      = $json_option['max_width'];

@@ -3,11 +3,11 @@ Contributors: giuliopanda
 Donate link: https://www.paypal.com/donate/?cmd=_donations&business=giuliopanda%40gmail.com&item_name=wordpress+plugin+Bulk+image+resizer
 Tags: convert,image,optimize,resize,attachment,photo
 Requires at least: 5.3
-Tested up to: 5.8
-Requires PHP: 5.6
+Tested up to: 5.9
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.5
+Stable tag: 1.2.7
 
 You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
 
@@ -102,11 +102,16 @@ They assume no responsibility for any malfunctions or loss of information result
 
 == Changelog ==
 
+= 1.2.7 - 2022-01-23 =
+* Fixed missing graphics library in php and messages.
+* Updated: chart.js 3.7.0
+* Fixed calculates the 'remaining time' faster
+
 = 1.2.6 - 2022-01-23 =
-* Fix install uninstall function (Thanks to @Mateusz Gbiorczyk)
-* Fix return error in wp_generate_attachment_metadata (Thanks to @Mateusz Gbiorczyk)
+* Fixed install uninstall function (Thanks to @Mateusz Gbiorczyk)
+* Fixed return error in wp_generate_attachment_metadata (Thanks to @Mateusz Gbiorczyk)
 * Fixed missing GD extension in php.ini
-* Fix warning
+* Fixed warning
 
 = 1.2.5 - 2021-07-19 =
 * Fixed bug with animated gif

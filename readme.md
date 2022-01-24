@@ -92,17 +92,39 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 
 # Changelog
 
-### 1.0.1 - 2021-06-04
-* Traslation review 
+= 1.2.7 - 2022-01-23 =
+* Fixed missing graphics library in php and messages.
+* Updated: chart.js 3.7.0
 
-### 1.0.0 - 2021-06-02 
-* Fixed: complete bulk messages
+= 1.2.6 - 2022-01-23 =
+* Fixed install uninstall function (Thanks to @Mateusz Gbiorczyk)
+* Fixed return error in wp_generate_attachment_metadata (Thanks to @Mateusz Gbiorczyk)
+* Fixed missing GD extension in php.ini
+* Fixed warning
+
+= 1.2.5 - 2021-07-19 =
+* Fixed bug with animated gif
+* Test images with a webp extension
+
+= 1.2.0 - 2021-06-22 =
+* Text corrections
+* Rewritten the setting system
+* Added hooks in the settings form
+* Added deleting original option
+
+= 1.1.0 - 2021-06-15 =
+* Sanitize all input
+* Validate all data 
+* Escape allprint
+
+= 1.0.0 - 2021-06-02 =
+* Fixed: Complete bulk messages
 * Added: HHD Space Graph
 * Test: On wordpress 5.3 and fix code for PHP 5.6
-* Fixed: Post upload resize doesn't work
+* Fixed:  Post upload resize doesn't work
 
-### 0.9.0 - 2021-05-20 
-* first working version
+= 0.9.0 - 2021-05-20 =
+* Work version Bulk image resize 
 * Added: language Translate
 
 

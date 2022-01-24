@@ -229,7 +229,7 @@ function resize_all(start) {
             time = (time / real_perc) * (100 - real_perc);
             console.log("NEW TIME " + time);
             let left_time = "";
-            if (time_to_ajax > 4) {
+            if (time_to_ajax > 2) {
                 left_time = t9n_sprintf(t9n_time_remaining, secondsToHms(time));
             } else {
                 left_time = t9n_time_analisys;

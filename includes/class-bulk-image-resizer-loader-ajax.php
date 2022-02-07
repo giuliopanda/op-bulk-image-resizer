@@ -107,7 +107,10 @@ class Bulk_image_resizer_loader_ajax {
 		$jstat = json_decode($stat, true);
 		$old_file_size = 0;
 		if (is_array($jstat)) {
-			$old_file_size = array_shift(array_pop($jstat));
+			$array_pop = array_pop($jstat);
+			if (is_array($array_pop)) {
+				$old_file_size = array_shift(array_pop($jstat));
+			}
 		}
 		list($tot_img, $images_file_size, $datasets) = Opfn\prepare_images_stat();
 		if (is_array($jstat['data_size'])) {

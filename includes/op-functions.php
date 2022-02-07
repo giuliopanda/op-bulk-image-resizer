@@ -463,20 +463,17 @@ function op_get_image_info($path_img) {
         $result['width'] = $img2['width']; 
         $result['height'] = $img2['height']; 
         $result['file_size'] = filesize($path_img);
-        if ($width < $img2['width'] || $height < $img2['height']) {
+        if (($width < $img2['width'] || $height < $img2['height']) && stripos($path_img,'.jpg') !== false) {
             $result['show_btn'] = true;
             $result['class_resize'] = "gp_color_warning";
         } 
-        if (stripos($path_img,'.jpg') !== false) {
-            $result['show_btn']= true;
-            $result['class_size']  = "gp_color_warning";
-        }
+     
         if (!wp_is_writable($path_img)) {
             $result['show_btn']= false;
             $result['is_writable'] = false;
         }
         if ( stripos($path_img,'.jpg') !== false) {
-            $result['max_quality'] = ($width * $height * .6) * ($quality / 150); // quanto dovrebbe essere al massimo l'immagine
+            $result['max_quality'] = ($width * $height) * ($quality / 150); // quanto dovrebbe essere al massimo l'immagine
         } 
         /** 
          * @since 1.2.5

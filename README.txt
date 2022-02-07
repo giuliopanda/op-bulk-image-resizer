@@ -7,7 +7,7 @@ Tested up to: 5.9
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.7
+Stable tag: 1.2.8
 
 You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
 
@@ -101,6 +101,10 @@ They assume no responsibility for any malfunctions or loss of information result
 2. The bulk added to the media library
 
 == Changelog ==
+
+= 1.2.8 - 2022-02-07 =
+* Fixed After resizing the images, the page froze
+
 
 = 1.2.7 - 2022-01-23 =
 * Fixed missing graphics library in php and messages.

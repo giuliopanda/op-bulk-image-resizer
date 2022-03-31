@@ -9,7 +9,7 @@
  * Plugin Name:       Bulk image resizer
  * Plugin URI:        https://github.com/giuliopanda/bulk-image-resizer
  * Description:       Optimize images uploaded to the server. Go to "tools" to configure the plugin or to perform batch optimization. Go to "Media library (list view)" to optimize individual images.
- * Version:           1.2.8
+ * Version:           1.3.0
  * Requires at least: 5.3
  * Requires PHP:      7.3
  * Author:            Giulio Pandolfelli

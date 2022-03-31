@@ -1,5 +1,6 @@
 <?php 
 namespace opBulkImageResizer\Includes\OpFunctions;
+
 /**
  * Tutte le funzioni che servono per gestire il plugin
  * 
@@ -178,7 +179,7 @@ function op_optimize_single_img($attachment_id)
             }
             $old_file = file_get_contents($old_file_path);
             $save = $img->save($new_file_name);
-            // TSE LA COMPRESSIONE NON HA MIGLIORATO LA SITUAZIONE!  
+            // SE LA COMPRESSIONE NON HA MIGLIORATO LA SITUAZIONE!  
             
             $meta = wp_get_attachment_metadata($attachment_id, true);
             $meta['original_image'] = wp_basename($meta_original_image);
@@ -209,6 +210,47 @@ function op_optimize_single_img($attachment_id)
         }
     } else {
         return new \WP_Error('invalid_image');
+    }
+}
+
+
+
+/**
+ * Ricarica l'immagine originale
+ * @param int $attachment_id
+ * @since 1.3.0
+ * @return Boolean
+ */
+function op_optimize_revert_original_img($attachment_id)
+{
+    $path_attached = get_attached_file($attachment_id);
+    if (is_file($path_attached) && file_is_valid_image($path_attached)) {
+
+        $path_original =  wp_get_original_image_path($attachment_id);
+        if (is_file($path_original) && file_is_valid_image($path_original) && $path_original != $path_attached) {
+          
+            unlink($path_attached);
+            $meta = wp_get_attachment_metadata($attachment_id, true);
+            if (isset($meta['original_image'])) {
+                unset($meta['original_image']);
+            }
+            clearstatcache();
+            $img = wp_get_image_editor($path_original);
+            $img2 = $img->get_size();	
+            $result['width'] = $img2['width']; 
+            $result['height'] = $img2['height']; 
+            update_attached_file($attachment_id, $path_original);
+            $meta['width'] = $img2['width']; 
+            $meta['height'] =  $img2['height']; 
+ 
+             wp_update_attachment_metadata($attachment_id, $meta);
+            // 
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
     }
 }
 

@@ -48,6 +48,7 @@ class Bulk_image_resizer_loader {
 	public function bulk_action_upload ($bulk_actions) {
 		$json_option = Opfn\op_get_resize_options();
 		$bulk_actions['op-resize-original-images'] = sprintf(__('Resize: (%s)', 'bulk-image-resizer'), $json_option['max_width'] . "x" . $json_option['max_height']);
+		$bulk_actions['op-revert-original-images'] = sprintf(__('Revert back to the original image', 'bulk-image-resizer'));
 		return $bulk_actions;
 	}
 
@@ -60,6 +61,13 @@ class Bulk_image_resizer_loader {
 				Opfn\op_optimize_single_img($post_id);
 			}
 		}
+
+		if ($action == 'op-revert-original-images') {
+			foreach ($post_ids as $post_id) {
+				Opfn\op_optimize_revert_original_img($post_id);
+			}
+		}
+
 		return $redirect_url;
 	}
 

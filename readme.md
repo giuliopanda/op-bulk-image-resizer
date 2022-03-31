@@ -82,15 +82,13 @@ add_filter( 'op_bir_resize_image_uploading', 'fn_bir_resize_image_uploading', 10
 
 ```
 
-# Screenshots
- 
-![The appearance of the page for the resize bulk](https://raw.githubusercontent.com/giuliopanda/bulk-image-resizer/main/assets/screenshot-1.jpg)
-
-
-![The column added to the media library](https://raw.githubusercontent.com/giuliopanda/bulk-image-resizer/main/assets/screenshot-2.jpg)
-
 
 # Changelog
+= 1.3.0 - 2022-03-31 =
+* FEAUT Bulk revert back to original image from media library
+
+= 1.2.8 - 2022-02-07 =
+* Fixed After resizing the images, the page froze
 
 = 1.2.7 - 2022-01-23 =
 * Fixed missing graphics library in php and messages.

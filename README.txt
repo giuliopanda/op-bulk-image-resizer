@@ -7,7 +7,7 @@ Tested up to: 5.9
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.2.8
+Stable tag: 1.3.0
 
 You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
 
@@ -25,7 +25,7 @@ Bulk image resize allows you to optimize images uploaded to wordpress.
 - Ability to use specific hooks to customize optimization options.
 - It also resizes webp images.
 
- The GitHub repo can be found at [https://github.com/giuliopanda/bulk-image-resizer](https://github.com/giuliopanda/bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
+ The GitHub repo can be found at [https://github.com/giuliopanda/op-bulk-image-resizer](https://github.com/giuliopanda/op-bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
 == Installation ==
 
@@ -92,7 +92,7 @@ Bulk image resizer resizes uploaded images to optimize site speed and server spa
 **Be careful**
 If you remove the original images, The images are overwritten at the size you set, so it's important to make a backup first.
 They assume no responsibility for any malfunctions or loss of information resulting from the use of the plugin.
-
+From version 1.3 if you have kept the original image you can select the images from the media library and restore them.
 
 
 == Screenshots ==
@@ -101,10 +101,11 @@ They assume no responsibility for any malfunctions or loss of information result
 2. The bulk added to the media library
 
 == Changelog ==
+= 1.3.0 - 2022-03-31 =
+* FEAUT Bulk revert back to original image from media library
 
 = 1.2.8 - 2022-02-07 =
 * Fixed After resizing the images, the page froze
-
 
 = 1.2.7 - 2022-01-23 =
 * Fixed missing graphics library in php and messages.
@@ -112,8 +113,8 @@ They assume no responsibility for any malfunctions or loss of information result
 * Fixed calculates the 'remaining time' faster
 
 = 1.2.6 - 2022-01-23 =
-* Fixed install uninstall function (Thanks to @Mateusz Gbiorczyk)
-* Fixed return error in wp_generate_attachment_metadata (Thanks to @Mateusz Gbiorczyk)
+* Fixed install uninstall function 
+* Fixed return error in wp_generate_attachment_metadata
 * Fixed missing GD extension in php.ini
 * Fixed warning
 

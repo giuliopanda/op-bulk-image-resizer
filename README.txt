@@ -3,7 +3,7 @@ Contributors: giuliopanda
 Donate link: https://www.paypal.com/donate/?cmd=_donations&business=giuliopanda%40gmail.com&item_name=wordpress+plugin+Bulk+image+resizer
 Tags: convert,image,optimize,resize,attachment,photo
 Requires at least: 5.3
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -101,29 +101,35 @@ From version 1.3 if you have kept the original image you can select the images f
 2. The bulk added to the media library
 
 == Changelog ==
+= 1.3.1 - 2022-06-07 =
+* fixed setting update did not save checkboxes
+* improvement: when you deactivate the option "Resize when images are uploaded" it no longer shows the column with dimensions in the media library
+* fixed: Skip images that have a link as a path  
+* improvement:The upgrader_process_complete action is no longer used
+
 = 1.3.0 - 2022-03-31 =
-* FEAUT Bulk revert back to original image from media library
+* Feat. Bulk revert back to original image from media library
 
 = 1.2.8 - 2022-02-07 =
-* Fixed After resizing the images, the page froze
+* Fixed: After resizing the images, the page froze
 
 = 1.2.7 - 2022-01-23 =
-* Fixed missing graphics library in php and messages.
+* Fixed: missing graphics library in php and messages.
 * Updated: chart.js 3.7.0
-* Fixed calculates the 'remaining time' faster
+* Fixed: calculates the 'remaining time' faster
 
 = 1.2.6 - 2022-01-23 =
-* Fixed install uninstall function 
-* Fixed return error in wp_generate_attachment_metadata
-* Fixed missing GD extension in php.ini
-* Fixed warning
+* Fixed: install uninstall function 
+* Fixed: return error in wp_generate_attachment_metadata
+* Fixed: missing GD extension in php.ini
+* Fixed: warning
 
 = 1.2.5 - 2021-07-19 =
-* Fixed bug with animated gif
-* Test images with a webp extension
+* Fixed: bug with animated gif
+* Test: images with a webp extension
 
 = 1.2.0 - 2021-06-22 =
-* Text corrections
+* Text: corrections
 * Rewritten the setting system
 * Added hooks in the settings form
 * Added deleting original option

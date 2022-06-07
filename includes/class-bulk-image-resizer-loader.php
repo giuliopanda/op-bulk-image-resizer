@@ -16,7 +16,7 @@ if (!defined('WPINC')) die;
 class Bulk_image_resizer_loader {
 
 	public function __construct() {
-		add_filter('manage_media_columns', [$this, 'media_columns_filesize']);
+		
 		// I add in the administration header the js function to translate the js
 		if ((isset($_REQUEST['page']) && $_REQUEST['page'] == 'bulk-image-resizer')) {
 			add_action('admin_head', [$this, 'transalte_javascript']);
@@ -24,7 +24,11 @@ class Bulk_image_resizer_loader {
 		// adds in the head of the page upload
 		add_action('admin_print_styles-upload.php', [$this, 'filesize_column_filesize']);
 		// adds a column on media library
-		add_action('manage_media_custom_column', [$this, 'media_custom_column_filesize'], 10, 2);
+		$options = Opfn\op_get_resize_options();
+		if ($options['on_upload']) {
+			add_filter('manage_media_columns', [$this, 'media_columns_filesize']);
+			add_action('manage_media_custom_column', [$this, 'media_custom_column_filesize'], 10, 2);
+		}
 		// when uploading a file
 		//add_filter( 'wp_handle_upload', [$this, 'handle_upload'], 10, 2  );
 		// add_action( 'admin_menu',  [$this, 'opbir_add_admin_menu'] ); Questo è spostato dentro ../admin/class-bulk-image-resizer-admin.php
@@ -39,7 +43,7 @@ class Bulk_image_resizer_loader {
 		// TEST di gestione inserimenti nuovo
 		add_filter( 'wp_generate_attachment_metadata',  [$this, 'wp_generate_attachment_metadata'], 10,2 ) ;
 		//viene chiamato ogni volta che un plugin viene aggiornato
-		add_action( 'upgrader_process_complete', [$this,  'upgrade_completed'], 10, 2 );
+		//add_action( 'upgrader_process_complete', [$this,  'upgrade_completed'], 10, 2 );
 	}
 
 	/**
@@ -307,7 +311,7 @@ class Bulk_image_resizer_loader {
 
 	/**
 	 * Evento chiamato ogni volta che un plugin o un tema viene aggiornato
-	 * NON TESTATO!
+	 * @deprecated v.1.3.1
 	 */
 	function upgrade_completed( $upgrader_object, $options ) {
 		// The path to our plugin's main file
@@ -321,7 +325,7 @@ class Bulk_image_resizer_loader {
 				$resizer['max_width'] = (int)get_option('op_resize_max_width', '1920');
 				$resizer['max_height'] = (int)get_option('op_resize_max_height', '1080');
 				$resizer['quality'] = (int)get_option('op_resize_quality', '75');
-				$resizer['version'] = '1.2.0';
+				$resizer['version'] = '1.3.1';
 
 				update_option('bulk_image_resizer', json_encode($resizer), false);	
 				delete_option('op_resize_max_width');

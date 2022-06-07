@@ -35,7 +35,14 @@ class Bulk_image_resizer_loader_ajax {
 	public function save_configuration() {
 		global $wpdb;
 		$result = ['updated' =>1, 'msg'=>__('Setting saved','bulk_image_resizer')];
-		update_option('bulk_image_resizer', json_encode($_REQUEST['op_resize']), false);	
+		$resize = $_REQUEST['op_resize'];
+		if (!array_key_exists('delete_original', $resize)) {
+			$resize['delete_original'] = 0; 
+		} 
+		if (!array_key_exists('on_upload', $resize)) {
+			$resize['on_upload'] = 0; 
+		} 
+		update_option('bulk_image_resizer', json_encode($resize), false);	
 		wp_send_json($result);
 	}
 	/**

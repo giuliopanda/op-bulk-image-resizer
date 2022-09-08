@@ -128,6 +128,7 @@ class Bulk_image_resizer_loader_ajax {
 		$jstat['tot_images'] 	= $tot_img;
 		$jstat['images_size'] 	= $images_file_size;
 		$jstat['last_update'] 	= time();
+		delete_transient('dirsize_cache');
 		update_option('op_resize_statistics', json_encode($jstat), false);
 		wp_send_json(['file_size' => $images_file_size, 'old_file_size' => $old_file_size, 'scatter' => ['datasets' => $datasets], 'data_size_graph'=>  Opfn\op_convert_space_to_graph($jstat['data_size'])]);
 	}

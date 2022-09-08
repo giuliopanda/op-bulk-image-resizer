@@ -7,7 +7,7 @@ Tested up to: 6.0
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.3.0
+Stable tag: 1.3.2
 
 You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
 
@@ -101,6 +101,10 @@ From version 1.3 if you have kept the original image you can select the images f
 2. The bulk added to the media library
 
 == Changelog ==
+
+= 1.3.2 - 2022-09-08 =
+* fixed bug: space recalculation with dirsize_cache. Thanks to Praul from GitHub
+
 = 1.3.1 - 2022-06-07 =
 * fixed setting update did not save checkboxes
 * improvement: when you deactivate the option "Resize when images are uploaded" it no longer shows the column with dimensions in the media library

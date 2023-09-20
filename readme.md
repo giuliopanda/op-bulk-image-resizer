@@ -1,126 +1,153 @@
-Creare  cli x Rename, thumbs, optimize, convert webp:  in 26 ore? 
+# Bulk images
+Wordpress plugin https://wordpress.org/plugins/bulk-image-resizer/
 
-CLI:
-19/05/2023 al 31/05/2023 20 ore lavorate
+Resize, optimize, convert to webp and rename images on your website. 
 
-GRAFICA:
-01/06/2023 1 ora lavorata 
-05/06/2023 1 ora lavorata
-06/06/2023 1 ora
-08/06/2023 1 ora
-09/06/2023 1 ora
+# Description 
 
-15/06/2023 1 ora start bulk
-18/06/2023 3 ore config & bulk
-19/06/2023 1 ora bulk test e fix
+Bulk images allows you to optimize images uploaded to wordpress without creating unnecessary copies of the upload folder!
 
-22/06/2023 1 test sul rename e convert  BUG: SI perde il 
-             dato all'immagine originale ad un certo punto!!!
-             test su restore se non c'è l'immagine originale sembra funzionare. Da testare se c'è l'immagine originale!
-26/06/2023 1 restore image testato e funzionante
+- You can resize all images with just one click.
+- You can convert images to webp.
+- You can optimize images by choosing quality.
+- You can change the name of the images
+- It is optimized to speed up the bulk process. 1000 images take a few minutes on a normal server.
+- You can enable the option to optimize images when uploaded to the server.
+- Allows you to decide the maximum size of the images and the quality in which they should be compressed.
+- Adds to media-library (list version) the possibility to select the images to be optimized.
+- Through graphics it allows you to monitor the status of the images on the server.
+- Ability to use specific hooks to customize optimization options.
+- You can restore and go back to the original images.
+- You can remove the original images if you have space problems.
 
-07/07/2023 1 
+ The GitHub repo can be found at [https://github.com/giuliopanda/op-bulk-image-resizer](https://github.com/giuliopanda/op-bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
-09/07/2023 Inizio STAT
+# Installation
 
-05/08/2023 3 optimize non rinomina più l'immagine, ma rinomino l'immagine originale, testato anche il restore
+After installing the plugin, **go to Tools** > **Bulk images** to set up the plugin. You can resize single images or groups from media library (mode list).
 
-06/08/2023 2 Delete Original, testato e funzionante
+# Frequently Asked Questions
 
-10-18 10 ore
-19/08/2023 4
-20/08/2023 4
+## Why use Bulk images? 
+I've found that most plugins that optimize images duplicate images in new folders creating a superstructure that complicates the entire site. This plugin optimizes the images you have uploaded to your site and overwrites them. The thumbs are also regenerated. If the image is converted to webp or if the name of the image is changed, the system tries to correct the images already published in the articles and pages. However, it is possible to restore at any time. If you have space problems you can always delete the original image that is used for the restore
 
+## Can I resize images when uploaded? 
+Yes, when you are in the setting activate "Resize when images are uploaded"
 
-## WORKING ON
-BUG STAT:
-l'ultima stat del grafico è sbagliata, deve tenere le info attuali
-Aggiungere il grafico con la distribuzione delle dimensioni
+## What formats does it support? 
+It supports jpg, webp and png formats in accordance with wordpress directives.
 
-Faccio un unico meta per 
-_bir_attachment_originalname, _bir_attachment_originaltitle, _bir_attachment_uniqid
-Lascio separato _bir_attachment_originalfilesize
+## Is it possible to decide not only the size but also the quality of the images? 
+Yes, you can decide whether to compress high, medium or low quality images.
 
+## Can I go back once resized? 
+Yes if you haven't removed the original image. Otherwise no.
 
-## TODO 
-Verificare file non immagini tipo pdf, zip
-Pubblicizzare il fatto che rigenera le thumbs!
-Pubblicizzare sulle singole immagini che sono ottimizzate
+## Can I decide which images to optimize? 
+Yes, you can select from the media library (list version) the images to be optimized, or use the hooks to extend the script.
 
-test webp su gif e png
-risistemare la CLI!
+## How can I add a filter? 
+You can customize which images to optimize and how, through 'op_bir_resize_image_bulk' filter.
 
-Faccio un unico meta (_bir_attachment) per: _bir_attachment_originalname, _bir_attachment_originaltitle, _bir_attachment_uniqid
-Lascio separato _bir_attachment_originalfilesize
+### Example
 
+`<?php 
+/**
+ * resize images uploaded
+ * If it is a post it resizes to 800x800 pixels, if in the title there is no_compress it does not compress it.
+ * @return  Boolean|Array [width:int,height:int]
+ */
+function fn_bir_resize_image ($filename, $attachment_id) {
+    if (stripos($filename,"no_compress")) {
+        return false;
+    }
+    $parent_id = wp_get_post_parent_id( $attachment_id);
+    if ($parent_id > 0) {
+        $post_type = get_post_type( $parent_id );
+        if ($post_type == "post") {
+            return ['with'=>800,'height'=>800, 'quality'=>80];
+        }
+    }
+    return true;
+}
+// Called during bulk.
+add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
+?>`
 
-Il restore è molto lento bisogna fare che in bir-rename-function > replace_post_image_in_db se i nomi delle immagini coincidono non si va avanti nel cercare tra i post!
+### Hooks: 
+op_bir_resize_image_bulk_suffix returns the suffix to be added to the image 
+bulk-image-resizer-after-setup-form adds html to the end of the setting form
 
-[post_name] stampa l'id se non trova il nome?!
+= What about Bulk image resizer =
+When you upload an image to wordpress, thumbs are created for the template, but the uploaded image is saved and sometimes used.
+Bulk image resizer resizes uploaded images to optimize site speed and server space.
 
-Note:
-al momento il resize lo faccio su wp_update_attachment_metadata ... ma non mi piace, vorrei farlo su wp_generate_attachment_metadata oppure proprio sull'upload!
-------------------------------
-
-## DONE
-bulk Delete original
-fixbug: l'originale con l'estensione se il nome è da modificare es: f02f89.webp-original-1.png
-Restore images: Non fa il restore del titolo!
-Rename title non l'ho ancora scritto, per ora rinomina sempre anche il titolo!
-Rename images: Rinomina il titolo ?!? non salva il vecchio nome da nessuna parte!
-restore rename images: da Fare a seconda del vecchio nome!
-
-Quando ottimizzo un'immagine che non viene rinominata o non si cambia formato, cambio il nome dell'immagine originale non il nome dell'immagine ottimizzata!!!! è molto più efficiente!
-
-Quando faccio l'optimize non aggiorno Dimensione del file tra i metadati!
-
-Process Done 100%: sistemare i messaggi di successo
-
-webp uload sbaglia il nome dell'immagine originale. lascia il suffisso webp
-
-Se l'immagine salvata è minore di dimensione di quella ottimizzata in webp allora la risalvo.
-includes/class-bir-optimize-function.php
------------------
-
-## TEST: 
-- Verifico di avere delle immagini da poter usare per i test nel sito 
-- Apro il file class-bir-cli.php o class-bir-debug-cli.php a seconda del tipo di test che voglio fare
-- mi leggo i commenti delle due classi con gli esempi di come eseguire le linee di comando
-- Apri il terminale all'interno della cartella principale del progetto
-- scrivo la linea di comando che voglio. Ad esempio:
-- $ wp bir rename {image_id} {new_name} --allow-root 
+**Be careful**
+If you remove the original images, The images are overwritten at the size you set, so it's important to make a backup first.
+They assume no responsibility for any malfunctions or loss of information resulting from the use of the plugin.
 
 
-## VERSIONE 3
-Attiva Remove image (single) quando si  elimina un'immagine e le rimuove dagli articoli oppure non si possono rimuovere le immagini presenti negli articoli
-Regenerate collega
-Regenerate thumbs
+# Changelog
 
-Possibilità di resize personalizzati a seconda del tipo di articolo (tipo per i prodotti)
-Verifica delle immagini troppo piccole
-Trovare le immagini già caricate
-Possibilità di sostituire un'immagine
-backup & restore
-Ottimizzazione dal server
-woocommerce support
+= 2.0.0 2023-09-08 =
+* Feat. rewritten the whole plugin!
+* Added ability to convert to webp.
+* Added ability to rename images.
+* Automatic rebuild of thumbs.
+* Converted image paths within articles.
 
-Shortcode per rinominare le immagini se sono collegate ad un post
-[post_name] (già scritto) <?php _e('It is replaced with the slug of the post to which the image is attached', 'bulk-image-resizer'); ?><br>
-Shortcode categorie e tag dai post e gestione dei post_parent
+= 1.3.2 - 2022-09-08 =
+* fixed bug: space recalculation with dirsize_cache. Thanks to Praul from GitHub
 
-Regenerate thumbs aggiungere TAB
-Libreria media quando ottimizzi o rigeneri le immagini visualizza i messaggi (di errore o di successo)
+= 1.3.1 - 2022-06-07 =
+* fixed setting update did not save checkboxes
+* improvement: when you deactivate the option "Resize when images are uploaded" it no longer shows the column with dimensions in the media library
+* fixed: Skip images that have a link as a path  
+* improvement:The upgrader_process_complete action is no longer used
 
-## APPUNTI
+= 1.3.0 - 2022-03-31 =
+* Feat. Bulk revert back to original image from media library
+
+= 1.2.8 - 2022-02-07 =
+* Fixed: After resizing the images, the page froze
+
+= 1.2.7 - 2022-01-23 =
+* Fixed: missing graphics library in php and messages.
+* Updated: chart.js 3.7.0
+* Fixed: calculates the 'remaining time' faster
+
+= 1.2.6 - 2022-01-23 =
+* Fixed: install uninstall function 
+* Fixed: return error in wp_generate_attachment_metadata
+* Fixed: missing GD extension in php.ini
+* Fixed: warning
+
+= 1.2.5 - 2021-07-19 =
+* Fixed: bug with animated gif
+* Test: images with a webp extension
+
+= 1.2.0 - 2021-06-22 =
+* Text: corrections
+* Rewritten the setting system
+* Added hooks in the settings form
+* Added deleting original option
+
+= 1.1.0 - 2021-06-15 =
+* Sanitize all input
+* Validate all data 
+* Escape allprint
+
+= 1.0.0 - 2021-06-02 =
+* Fixed: Complete bulk messages
+* Added: HHD Space Graph
+* Test: On wordpress 5.3 and fix code for PHP 5.6
+* Fixed:  Post upload resize doesn't work
+
+= 0.9.0 - 2021-05-20 =
+* Work version Bulk image resize 
+* Added: language Translate
 
 
-if (function_exists('imageavif')) {
-
-
-
-    ---
-I plugin che convertono le immagini in webp molto spesso duplicano le immagini e creano delle sovrastrutture nel sito per gestire questa duplicazione. Perfino alcuni plugin che dicono di non farlo in realtà creano delle cartelle 'nascoste' con le immagini duplicate. In questo modo appesantiscono il sito di una nuova sovrastruttura, occupano spazio sul server duplicando non solo le immagini originali, ma anche tutte le thumbs, alcuni addirittura in più formati (webp e avif). 
-Tutto questo per due motivi: 1 sei costretto a mantenere il plugin attivo e a pagare il rinnovo altrimenti il sito perde tutte le ottimizzazioni, se il sito dopo le ottimizzazioni non funziona più bene o qualche immagine non si è convertita come si voleva, ti basta disinstallare il plugin per ritornare alla condizione iniziale.
-
-Questo plugin modifica le immagini che hai caricato, ne cambia il nome il formato o le dimensioni a seconda delle tue esigenze. 
-Le immagini alterate vengono ricercate e sostituite nei contenuti del sito per continuare a funzionare, tuttavia è importante che fai un backup del sito prima di usarlo e che verifichi che tutti i link alle immagini siano stati sostituiti correttamente. Forse richiede un po' più di lavoro e consapevolezza, ma il risultato è un sito più leggero e più veloce, senza sovrastrutture e senza dipendenze da plugin. E alla fine è poi la differenza tra un sito fatto da un professionista o un sito improvvisato fatto funzionare a forza di plugin installati a caso.
+== Credits ==
+The Bulk image resize was started in 2021 by [Giulio Pandolfelli](giuliopanda@gmail.com) 
+for graphs I use https://www.chartjs.org/

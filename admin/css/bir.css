@@ -1,0 +1,543 @@
+#wpwrap {background: #FFF;}
+/** 
+* TABS
+ */
+.bir-tabs {
+    background: #FFF;
+    border-bottom: 1px solid #CCC;
+    margin: 1rem 0 1em;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}
+.bir-tabs .bir-tab {
+    font-size:1rem;
+    display: inline-block;
+    margin: 0;
+    padding: .5rem 1rem;
+    cursor: pointer;
+}
+
+.bir-tabs .bir-info {
+    display: inline-block;
+    font-size:.9rem;
+    color:#999;
+    margin: 0 0 0 1rem;
+    padding: .5rem 1rem;
+}
+
+.bir-tabs .bir-tab:hover {
+    box-shadow: inset 0 -3px #e4ecf4;
+}
+.bir-tabs li.bir-tab-active {
+    box-shadow: inset 0 -3px #3582c4;
+}
+.bir-h1 {margin-left:1rem !important;}
+
+.bir-tab-content {display: none; max-width: 1200px;}
+.bir-tab-content-active {display: block;}
+
+/**
+* FINE TABS
+*/
+
+/**
+* BOTTONE SWITCH
+*/
+.op-form-field-small {
+    padding-top: .5rem;
+    width: 100%;
+     align-self: center;
+    box-sizing: border-box;
+}
+.switch-content {
+    display: inline-flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 3.25rem;
+    height: 1.65rem;
+    margin: 0 .5rem;
+}
+
+.switch input { 
+opacity: 0;
+width: 0;
+height: 0;
+display: none;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #eee;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 1.25rem;
+width: 1.25rem;
+left: .2rem;
+bottom: .13rem;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+
+}
+
+input:checked + .slider {
+background-color: #2271b1;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2271b1;
+}
+
+input:disabled + .slider {
+    background-color: #bdbdbd;
+    opacity: .3;
+    }
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(1.45rem);
+    -ms-transform: translateX(1.45rem);
+    transform: translateX(1.45rem);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 2rem;
+    border: 1px solid #777;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+    border: 1px solid #777;
+}
+/**
+* FINE BOTTONE SWITCH
+*/ 
+
+/**
+* ROW CONFIG
+*/
+
+.bir-config-box {
+    border:1px solid #CCC;
+    margin:.5rem 0;
+    border-bottom:10px solid #cddce9;
+}
+
+
+.bir-default-configuration {
+    min-width: 250px;
+}
+
+.bir-config-row {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-items: start;
+    justify-content: start;
+    gap: 2rem;
+    padding:1rem;
+}
+
+.bir-config-advanced-row {
+    border-top:1px solid #CCC;
+    padding:.5rem 1rem;
+}
+
+.bir-config-title {  
+    font-size: 1rem;
+    font-weight: bold;
+    min-width: 185px;
+}
+
+.bir-config-info {
+    background-color: #e4ecf4;
+    border:1px solid #CCC;
+    padding:1rem;
+    margin:1rem 0;
+    font-size: 1rem;
+}
+.bir-config-success  {
+    color: #1a4d33;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding:1rem;
+    margin:1rem 0;
+    font-size: 1rem;
+}
+
+.bir-config-warning {
+    color: #764d29;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    padding:1rem;
+    margin:1rem 0;
+    font-size: 1rem;
+}
+
+.op-grid-2-col {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: .75rem;
+    grid-row-gap: 1rem;
+}
+.op-grid-3-col {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-column-gap: .75rem;
+    grid-row-gap: 1rem;
+}
+.op-grid-3-col  > div {
+    width: 90%;
+}
+
+.js-btn-toogle-txt1 {
+    display: inline;
+}
+.js-btn-toogle-txt2 {
+    display: none;
+}
+
+
+
+.bir-config-advanced-row {
+    display: none;
+}
+.bir-active-opt .bir-config-advanced-row {
+    display: block;
+}
+
+.bir-default-configuration {
+    display: none;
+}
+.bir-active-opt .bir-default-configuration {
+    display: block;
+    margin-top: -10px;
+}
+
+.js-btn-toogle-advanced {
+    display: none !important;
+}
+.bir-checkbox-new-imgs {
+    display: none !important;
+}
+.bir-active-opt .js-btn-toogle-advanced {
+    display: inline-block !important;
+}
+.bir-active-opt .bir-checkbox-new-imgs {
+    display: inline-block !important;
+}
+.bir-switch-label-active {
+    color: #31a76c;
+    font-weight: bold;
+    display: none;
+    width: 80px;
+}
+.bir-switch-label-noactive {
+    color: #e74c3c;
+    font-weight: bold;
+    width: 80px;
+}
+.bir-active-opt .bir-switch-label-active {
+    display: inline;
+}
+.bir-active-opt .bir-switch-label-noactive {
+    display: none;
+}
+
+.bir-input-long {
+    width: 100%;
+}
+
+
+/**
+* CHECKBOX 
+*/
+
+.adfo-checkbox {
+    position: relative;
+    display: inline-block;
+    vertical-align: baseline;
+    height: 22px;
+    line-height: 24px;
+ }
+ 
+ .adfo-checkbox input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+ }
+ 
+ .adfo-checkbox .adfo-checbox-box-bg {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #ddd;
+    border-radius: 4px;
+    z-index: 0;
+ }
+ 
+ .adfo-checkbox input[type="checkbox"]:checked + .adfo-checbox-box-bg {
+    background: #2271b1;
+ }
+
+ .adfo-checkbox svg {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -2px;
+    z-index: 2;
+    fill:white;
+ }
+
+ .adfo-checkbox input[type="checkbox"]:checked  ~  svg {
+    display: block;
+ }
+
+ .adfo-checkbox span {
+    margin-left: 26px;
+    display: inline-block;
+    font-size: 1rem;
+    line-height:20px;
+ }
+
+ /**
+* FINE CHECKBOX
+*/
+
+/**
+* TAB BULK
+*/
+
+.bir-box-log {
+    border: 1px solid;
+    background: #f8f8f8;
+    padding: 20px;
+    font-size: 12px;
+    line-height: 22px;
+    overflow: hidden;
+    margin: 20px 0;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.bir-box-log .a {
+    display:inline-block;
+    padding:2px 5px;
+}
+.bir-box-log .bir-success-link {
+    color: #31a76c;
+}
+.bir-box-log .bir-skipped-link {
+    color: #888;
+}
+.bir-box-log .bir-error-link {
+    color: #e74c3c;
+}
+.bir-box-log .bir-success-link:hover {
+    background-color: #31a76c;
+    color: #FFF;
+}
+.bir-box-log .bir-error-link:hover {
+    background-color: #e74c3c;
+    color: #FFF;
+}
+.bir-box-log .bir-skipped-link:hover {
+    background-color: #888;
+    color: #FFF;
+}
+
+/**
+* FINE TAB BULK
+*/
+
+/**
+* GENERICI
+*/
+
+.bir-btn-disabled {
+    cursor: not-allowed !important;
+    opacity: .3;
+}
+.bir-btn-disabled:hover {
+    background-color: inherit;
+    background: inherit;
+    color: inherit;
+}
+/**
+* PROGRESS BAR
+*/
+
+.bir-progress {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 2rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+}
+
+.bir-progress-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    background-color: #007bff;
+    transition: width .6s ease;
+}
+
+.bir-progress-box {
+    margin-top:20px;
+}
+
+.bir-progress-disabled {
+    background-color: #c9c9c9;
+}
+
+/**
+ * FINE Progress Bar
+ */
+
+
+ /**
+ * table
+*/
+.bir-table {
+    border-collapse: collapse;
+}
+.bir-table tr {
+    border-bottom: 1px solid #CCC;
+}
+.bir-table th {
+    text-align: left;
+    padding: 1rem;
+    background-color: #e4ecf4;
+    border-bottom: 1px solid #CCC;
+}
+.bir-table td {
+    padding: 1rem;
+}
+.bir-table tr:hover {
+    background-color: #f5f5f5;
+}
+.bir-table tr:nth-child(even) {
+    background-color: #FFF;
+}
+.bir-table tr:nth-child(odd) {
+    background-color: #FFF;
+}
+/* Last row total */
+.bir-table tr:last-child {
+    background-color: #e4ecf4;
+}
+.bir-table tr:last-child td {
+    font-weight: bold;
+    border-top: 1px solid #CCC;
+}
+.bir-table tr:last-child td:first-child {
+    text-align: right;
+}
+
+/**
+* FINE table
+*/
+
+/**
+* STATISTICHE BOX
+*/
+.stat-info-box {
+    color: #999;
+    font-size: .9rem;
+    margin: 0 0 0 1rem;
+}
+.stat-info-row-2-cols {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: .75rem;
+    grid-row-gap: 1rem;
+}
+
+
+/**
+* baloon only border
+*/
+
+.bir-advanced-row-info {
+    font-style: italic;
+    position: relative;
+    padding: .5rem;
+    margin:0 0 .5rem 0;
+    background-color: #e4ecf4;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+}
+/* Arrow up */
+.bir-advanced-row-info::before {
+    content: '';
+    position: absolute;
+    transform: scaleX(-1);
+    left: 10%;
+    clip-path: polygon(0 0, 100% 100%, 25% 100%);
+    bottom: calc(100% - 0px);
+    height: 19px;
+    width: 36px;
+    background: #CCC;
+}
+
+.bir-advanced-row-info::after {
+    content: '';
+    position: absolute;
+    transform: scaleX(-1);
+    left: 10%;
+    clip-path: polygon(0 0, 100% 100%, 25% 100%);
+    bottom: calc(100% - 1px);
+    height: 17px;
+    width: 33px;
+    position: absolute;
+    background: #e4ecf4;
+}
+
+/**
+* FINE baloon only border
+*/
+
+/**
+* DOC
+*/
+.bir-doc-box {max-width: 800px; font-size:1rem}
+.bir-doc-box p {font-size: .9rem;}
+.bir-doc-box h3 {
+    color:#3582c4;
+    margin-bottom:.5rem;
+}

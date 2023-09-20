@@ -1,47 +1,49 @@
-=== Bulk image resizer ===
+=== Bulk images ===
 Contributors: giuliopanda 
 Donate link: https://www.paypal.com/donate/?cmd=_donations&business=giuliopanda%40gmail.com&item_name=wordpress+plugin+Bulk+image+resizer
-Tags: convert,image,optimize,resize,attachment,photo
+Tags: convert,image,optimize,resize,webp
 Requires at least: 5.3
-Tested up to: 6.0
+Tested up to: 6.2
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: 1.3.2
 
-You can automatically resize uploaded images. You can choose the maximum size, quality and whether to keep the original image or overwrite it.
+Resize, optimize, convert to webp and rename images on your website. 
 
 == Description ==
 
-Bulk image resize allows you to optimize images uploaded to wordpress.
+Bulk images allows you to optimize images uploaded to wordpress without creating unnecessary copies of the upload folder!
 
 - You can resize all images with just one click.
+- You can convert images to webp.
+- You can optimize images by choosing quality.
+- You can change the name of the images
 - It is optimized to speed up the bulk process. 1000 images take a few minutes on a normal server.
 - You can enable the option to optimize images when uploaded to the server.
 - Allows you to decide the maximum size of the images and the quality in which they should be compressed.
 - Adds to media-library (list version) the possibility to select the images to be optimized.
-- Still on media-library (list version) it adds an additional information column on the image.
 - Through graphics it allows you to monitor the status of the images on the server.
 - Ability to use specific hooks to customize optimization options.
-- It also resizes webp images.
+- You can restore and go back to the original images.
+- You can remove the original images if you have space problems.
 
  The GitHub repo can be found at [https://github.com/giuliopanda/op-bulk-image-resizer](https://github.com/giuliopanda/op-bulk-image-resizer). Please use the Support tab for potential bugs, issues, or enhancement ideas.
 
 == Installation ==
 
-After installing the plugin, **go to Tools** > **Bulk image resize** to set up the plugin.
-You can resize single images or groups from media library (mode list).
+After installing the plugin, **go to Tools** > **Bulk images** to set up the plugin. You can resize single images or groups from media library (mode list).
 
 == Frequently Asked Questions ==
 
-= Why use Bulk image resizer? =
-Because it is opensource and you have no limits in use. It will allow you to make your site faster and will save you space. 
+= Why use Bulk images? =
+I've found that most plugins that optimize images duplicate images in new folders creating a superstructure that complicates the entire site. This plugin optimizes the images you have uploaded to your site and overwrites them. The thumbs are also regenerated. If the image is converted to webp or if the name of the image is changed, the system tries to correct the images already published in the articles and pages. However, it is possible to restore at any time. If you have space problems you can always delete the original image that is used for the restore
 
 = Can I resize images when uploaded? =
 Yes, when you are in the setting activate "Resize when images are uploaded"
 
 = What formats does it support? =
-It supports jpg, webp, (gif not animated) and png formats in accordance with wordpress directives.
+It supports jpg, webp and png formats in accordance with wordpress directives.
 
 = Is it possible to decide not only the size but also the quality of the images? =
 Yes, you can decide whether to compress high, medium or low quality images.
@@ -71,7 +73,7 @@ function fn_bir_resize_image ($filename, $attachment_id) {
     if ($parent_id > 0) {
         $post_type = get_post_type( $parent_id );
         if ($post_type == "post") {
-            return [800,800];
+            return ['with'=>800,'height'=>800, 'quality'=>80];
         }
     }
     return true;
@@ -81,8 +83,7 @@ add_filter( 'op_bir_resize_image_bulk', 'fn_bir_resize_image', 10, 2);
 ?>`
 
 Hooks: 
-op_bir_resize_image_bulk_suffix returns the suffix to be added to the image if the original is not deleted
-bulk-image-resizer-before-setup-form adds html to the beginning of the setting form
+op_bir_resize_image_bulk_suffix returns the suffix to be added to the image 
 bulk-image-resizer-after-setup-form adds html to the end of the setting form
 
 = What about Bulk image resizer =
@@ -92,7 +93,6 @@ Bulk image resizer resizes uploaded images to optimize site speed and server spa
 **Be careful**
 If you remove the original images, The images are overwritten at the size you set, so it's important to make a backup first.
 They assume no responsibility for any malfunctions or loss of information resulting from the use of the plugin.
-From version 1.3 if you have kept the original image you can select the images from the media library and restore them.
 
 
 == Screenshots ==
